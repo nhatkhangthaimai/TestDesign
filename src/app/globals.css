@@ -1,26 +1,183 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --canvas: #ffffff;
+  --ink: #000000;
+  --charcoal: #333333;
+  --slate: #595959;
+  --primary: #fa9000;
+  --live-red: #c31833;
+  --soft: #f0f0f0;
+  --hairline: #d8d8d8;
+  --silver: #bebebe;
+  --night-navy: #100e2f;
+  --network-canvas: #181818;
+  --indigo: #272967;
+  --gold: #dba200;
+  --amber: #ffa000;
+  --select-gold: #ffc500;
+  --rail-teal: #00cbca;
+  --rail-red: #bc0000;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--canvas);
+  color: var(--charcoal);
+  font-family: var(--font-roboto), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* DESIGN.md Signature Components */
+.section-eyebrow-lockup {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.section-eyebrow-bar {
+  width: 8px;
+  height: 26px;
+  background-color: #fa9000;
+  flex-shrink: 0;
+}
+
+.section-eyebrow-text {
+  font-family: var(--font-roboto), sans-serif;
+  font-weight: 300;
+  font-size: 20px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: #595959;
+  line-height: 1.2;
+}
+
+.btn-pill-dark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background-color: #000000;
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 500;
+  border-radius: 18px;
+  padding: 8px 20px;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  border: 1px solid transparent;
+}
+
+.btn-pill-dark:hover {
+  background-color: #222222;
+  transform: translateY(-1px);
+}
+
+.btn-pill-dark:active {
+  transform: translateY(0);
+}
+
+.btn-pill-outline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background-color: #ffffff;
+  color: #000000;
+  border: 1px solid #000000;
+  font-size: 15px;
+  font-weight: 500;
+  border-radius: 18px;
+  padding: 8px 20px;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.btn-pill-outline:hover {
+  background-color: #f5f5f5;
+}
+
+.btn-pill-mini {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #000000;
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: 600;
+  border-radius: 9999px;
+  padding: 2px 8px;
+}
+
+.text-input-capsule {
+  background-color: #ffffff;
+  color: #000000;
+  border: 1px solid #595959;
+  border-radius: 22px;
+  padding: 9px 18px;
+  font-size: 15px;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  width: 100%;
+}
+
+.text-input-capsule:focus {
+  border-color: #000000;
+  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
+}
+
+.live-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #c31833;
+  font-weight: 900;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  border-radius: 2px;
+}
+
+.live-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 9999px;
+  background-color: #c31833;
+  animation: pulse-red 1.5s infinite ease-in-out;
+}
+
+@keyframes pulse-red {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.4;
+    transform: scale(1.3);
+  }
+}
+
+.breaking-band {
+  background-color: #c31833;
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f0f0f0;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #bebebe;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #595959;
 }
