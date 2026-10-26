@@ -196,12 +196,12 @@ export default function CartPage() {
                 placeholder="Nhập mã (ví dụ: WELCOME10)"
                 value={couponCode}
                 onChange={(e) => setCouponCode(e.target.value.toUpperCase())}
-                className="text-input-capsule text-xs uppercase"
+                className="flex-1 h-10 bg-white text-[#111111] border border-[#d4d4d4] rounded-lg px-3 text-sm uppercase placeholder:text-[#999999] focus:outline-none focus:border-black focus:ring-1 focus:ring-black transition-all"
               />
               <button
                 type="submit"
                 disabled={checkingCoupon}
-                className="btn-pill-dark text-xs py-2 px-4 whitespace-nowrap"
+                className="h-10 px-4 bg-black hover:bg-[#222222] text-white text-xs font-semibold rounded-lg whitespace-nowrap cursor-pointer transition-all active:scale-95 disabled:opacity-60"
               >
                 {checkingCoupon ? "Kiểm tra..." : "Áp dụng"}
               </button>

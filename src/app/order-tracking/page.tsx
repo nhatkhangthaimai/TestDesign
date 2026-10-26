@@ -91,12 +91,12 @@ function OrderTrackingContent() {
           placeholder="Nhập mã đơn hàng (ví dụ: ORD-2026-9812)..."
           value={searchCode}
           onChange={(e) => setSearchCode(e.target.value.toUpperCase())}
-          className="text-input-capsule text-xs border-none uppercase flex-1"
+          className="flex-1 h-11 px-3 text-sm uppercase placeholder:normal-case placeholder:text-[#999999] outline-none bg-transparent"
         />
         <button
           onClick={() => handleSearch(searchCode)}
           disabled={loading}
-          className="btn-pill-dark text-xs py-2 px-5 whitespace-nowrap"
+          className="h-11 px-6 bg-black hover:bg-[#222222] text-white text-xs font-semibold rounded-lg whitespace-nowrap cursor-pointer transition-all active:scale-95 disabled:opacity-60"
         >
           {loading ? "Đang tìm..." : "Tra cứu"}
         </button>

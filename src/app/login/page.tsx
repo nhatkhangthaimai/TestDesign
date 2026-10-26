@@ -41,100 +41,105 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="max-w-md mx-auto px-4 py-16">
-      {/* Auth Card - DESIGN.md ex-auth-form-card */}
-      <div className="bg-white border border-[#d8d8d8] rounded-[10px] p-8 shadow-sm space-y-6">
-        <div className="text-center space-y-2">
-          <div className="w-12 h-12 bg-[#fa9000] text-white flex items-center justify-center font-black text-2xl mx-auto rounded-[4px]">
-            AJ
+    <div className="min-h-[calc(100vh-200px)] flex items-center justify-center py-12 px-4 sm:px-6 bg-[#fafafa]">
+      <div className="w-full max-w-md">
+        {/* Auth Card */}
+        <div className="bg-white border border-[#e5e5e5] rounded-2xl p-8 sm:p-10 shadow-[0_8px_30px_rgb(0,0,0,0.06)]">
+          {/* Header */}
+          <div className="text-center mb-8">
+            <div className="inline-flex items-center justify-center w-12 h-12 bg-[#fa9000] text-white font-black text-xl rounded-xl shadow-sm mb-4">
+              AJ
+            </div>
+            <h1 className="text-2xl sm:text-[26px] font-bold text-[#111111] tracking-tight mb-2">
+              Đăng Nhập Tài Khoản
+            </h1>
+            <p className="text-sm text-[#666666] leading-relaxed max-w-xs mx-auto">
+              Truy cập để quản lý đơn hàng, địa chỉ giao hàng và mã giảm giá thành viên
+            </p>
           </div>
-          <h1 className="font-bold text-2xl text-black">Đăng Nhập Tài Khoản</h1>
-          <p className="text-xs text-[#595959]">
-            Truy cập để quản lý đơn hàng, địa chỉ giao hàng và nhận mã giảm giá thành viên
-          </p>
-        </div>
 
-        {/* 1-Click Demo Accounts Pill Bar */}
-        <div className="bg-[#f8f8f8] border border-[#d8d8d8] rounded-[8px] p-3 space-y-2">
-          <span className="text-[10px] uppercase font-bold text-[#595959] tracking-wider block">
-            TÀI KHOẢN MẪU THỬ NGHIỆM NHANH:
-          </span>
-          <div className="flex gap-2">
-            <button
-              type="button"
-              onClick={() => fillDemoAccount("admin")}
-              className="flex-1 py-1.5 px-2 bg-black text-white rounded-[4px] text-[11px] font-bold hover:bg-[#222222] transition-colors flex items-center justify-center gap-1"
-            >
-              <ShieldCheck className="w-3.5 h-3.5 text-[#fa9000]" />
-              <span>Admin Cấp Cao</span>
-            </button>
-            <button
-              type="button"
-              onClick={() => fillDemoAccount("user")}
-              className="flex-1 py-1.5 px-2 bg-white border border-[#d8d8d8] text-black rounded-[4px] text-[11px] font-bold hover:bg-[#f0f0f0] transition-colors flex items-center justify-center gap-1"
-            >
-              <User className="w-3.5 h-3.5" />
-              <span>Khách Hàng</span>
-            </button>
-          </div>
-        </div>
-
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <label className="block text-xs font-bold text-black mb-1">
-              Địa chỉ Email
-            </label>
-            <div className="relative">
-              <input
-                type="email"
-                placeholder="admin@ecommerce.vn"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="text-input-capsule text-xs pl-10"
-                required
-              />
-              <Mail className="w-4 h-4 text-[#595959] absolute left-3.5 top-3" />
+          {/* 1-Click Demo Accounts Pill Bar */}
+          <div className="bg-[#f8f9fa] border border-[#e5e7eb] rounded-xl p-3.5 mb-6 space-y-2">
+            <span className="text-[11px] uppercase font-bold text-[#666666] tracking-wider block">
+              Tài khoản mẫu thử nghiệm nhanh:
+            </span>
+            <div className="flex gap-2">
+              <button
+                type="button"
+                onClick={() => fillDemoAccount("admin")}
+                className="flex-1 py-2 px-2.5 bg-black text-white rounded-lg text-xs font-semibold hover:bg-[#222222] transition-all flex items-center justify-center gap-1.5 shadow-xs cursor-pointer active:scale-95"
+              >
+                <ShieldCheck className="w-3.5 h-3.5 text-[#fa9000]" />
+                <span>Admin Cấp Cao</span>
+              </button>
+              <button
+                type="button"
+                onClick={() => fillDemoAccount("user")}
+                className="flex-1 py-2 px-2.5 bg-white border border-[#d4d4d4] text-[#111111] rounded-lg text-xs font-semibold hover:bg-[#f0f0f0] transition-all flex items-center justify-center gap-1.5 shadow-xs cursor-pointer active:scale-95"
+              >
+                <User className="w-3.5 h-3.5 text-[#555555]" />
+                <span>Khách Hàng</span>
+              </button>
             </div>
           </div>
 
-          <div>
-            <label className="block text-xs font-bold text-black mb-1">
-              Mật khẩu
-            </label>
-            <div className="relative">
-              <input
-                type="password"
-                placeholder="••••••••"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="text-input-capsule text-xs pl-10"
-                required
-              />
-              <Lock className="w-4 h-4 text-[#595959] absolute left-3.5 top-3" />
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div>
+              <label className="block text-sm font-medium text-[#222222] mb-1.5">
+                Địa chỉ Email
+              </label>
+              <div className="relative">
+                <input
+                  type="email"
+                  placeholder="admin@ecommerce.vn"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="w-full h-11 bg-white text-[#111111] border border-[#d4d4d4] rounded-lg pl-11 pr-4 text-sm placeholder:text-[#999999] focus:outline-none focus:border-black focus:ring-1 focus:ring-black transition-all"
+                  required
+                />
+                <Mail className="w-4 h-4 text-[#888888] absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+              </div>
             </div>
+
+            <div>
+              <label className="block text-sm font-medium text-[#222222] mb-1.5">
+                Mật khẩu
+              </label>
+              <div className="relative">
+                <input
+                  type="password"
+                  placeholder="••••••••"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="w-full h-11 bg-white text-[#111111] border border-[#d4d4d4] rounded-lg pl-11 pr-4 text-sm placeholder:text-[#999999] focus:outline-none focus:border-black focus:ring-1 focus:ring-black transition-all"
+                  required
+                />
+                <Lock className="w-4 h-4 text-[#888888] absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+              </div>
+            </div>
+
+            <button
+              type="submit"
+              disabled={submitting}
+              className="w-full h-11 bg-black hover:bg-[#222222] active:scale-[0.99] text-white font-semibold text-sm rounded-lg transition-all flex items-center justify-center gap-2 mt-2 shadow-sm disabled:opacity-60 cursor-pointer"
+            >
+              {submitting ? (
+                <span>Đang xác thực...</span>
+              ) : (
+                <>
+                  <span className="tracking-wide">ĐĂNG NHẬP</span>
+                  <ArrowRight className="w-4 h-4" />
+                </>
+              )}
+            </button>
+          </form>
+
+          <div className="text-center text-sm text-[#666666] pt-6 mt-6 border-t border-[#f0f0f0]">
+            Chưa có tài khoản?{" "}
+            <Link href="/register" className="font-semibold text-black hover:underline ml-1">
+              Đăng ký tài khoản mới
+            </Link>
           </div>
-
-          <button
-            type="submit"
-            disabled={submitting}
-            className="btn-pill-dark w-full py-3 text-sm flex items-center justify-center gap-2 font-bold"
-          >
-            {submitting ? (
-              <span>Đang kiểm tra...</span>
-            ) : (
-              <>
-                <span>ĐĂNG NHẬP</span>
-                <ArrowRight className="w-4 h-4" />
-              </>
-            )}
-          </button>
-        </form>
-
-        <div className="text-center text-xs text-[#595959] pt-2 border-t border-[#f0f0f0]">
-          Chưa có tài khoản?{" "}
-          <Link href="/register" className="font-bold text-black hover:underline">
-            Đăng ký tài khoản mới
-          </Link>
         </div>
       </div>
     </div>

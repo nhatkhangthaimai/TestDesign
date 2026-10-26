@@ -1,14 +1,19 @@
 @import "tailwindcss";
 
+@theme {
+  --font-sans: var(--font-roboto), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-roboto: var(--font-roboto), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
 :root {
   --canvas: #ffffff;
   --ink: #000000;
-  --charcoal: #333333;
+  --charcoal: #222222;
   --slate: #595959;
   --primary: #fa9000;
   --live-red: #c31833;
-  --soft: #f0f0f0;
-  --hairline: #d8d8d8;
+  --soft: #f8f8f8;
+  --hairline: #e2e2e2;
   --silver: #bebebe;
   --night-navy: #100e2f;
   --network-canvas: #181818;
@@ -20,11 +25,116 @@
   --rail-red: #bc0000;
 }
 
+*, ::before, ::after {
+  font-family: var(--font-roboto), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  box-sizing: border-box;
+}
+
 body {
   background-color: var(--canvas);
   color: var(--charcoal);
   font-family: var(--font-roboto), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   -webkit-font-smoothing: antialiased;
+}
+
+input, button, select, textarea {
+  font-family: inherit;
+}
+
+/* Chrome autofill fix - clean styling instead of pale blue box */
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 40px #ffffff inset !important;
+  -webkit-text-fill-color: #111111 !important;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+/* Form Controls - Modern, Crisp, No-Overlap */
+.form-label {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin-bottom: 6px;
+  line-height: 1.4;
+}
+
+.form-input {
+  display: block;
+  width: 100%;
+  height: 44px;
+  background-color: #ffffff;
+  color: #111111;
+  border: 1px solid #d4d4d4;
+  border-radius: 8px;
+  padding: 0 14px;
+  font-size: 14px;
+  line-height: 1.5;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.form-input:focus {
+  background-color: #ffffff;
+  border-color: #000000;
+  box-shadow: 0 0 0 1px #000000;
+}
+
+.form-input::placeholder {
+  color: #8c8c8c;
+  font-size: 14px;
+}
+
+.form-input-icon {
+  padding-left: 44px !important;
+}
+
+.form-select {
+  display: block;
+  width: 100%;
+  height: 44px;
+  background-color: #ffffff;
+  color: #111111;
+  border: 1px solid #d4d4d4;
+  border-radius: 8px;
+  padding: 0 14px;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.form-select:focus {
+  background-color: #ffffff;
+  border-color: #000000;
+  box-shadow: 0 0 0 1px #000000;
+}
+
+/* Fallback class for compatibility with existing components */
+.text-input-capsule {
+  display: block;
+  width: 100%;
+  height: 44px;
+  background-color: #ffffff;
+  color: #111111;
+  border: 1px solid #d4d4d4;
+  border-radius: 8px;
+  padding: 0 14px;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.text-input-capsule:focus {
+  background-color: #ffffff;
+  border-color: #000000;
+  box-shadow: 0 0 0 1px #000000;
+}
+
+.text-input-capsule.pl-10,
+.text-input-capsule.form-input-icon {
+  padding-left: 44px !important;
 }
 
 /* DESIGN.md Signature Components */
@@ -42,7 +152,6 @@ body {
 }
 
 .section-eyebrow-text {
-  font-family: var(--font-roboto), sans-serif;
   font-weight: 300;
   font-size: 20px;
   letter-spacing: 0.05em;
@@ -58,10 +167,10 @@ body {
   gap: 8px;
   background-color: #000000;
   color: #ffffff;
-  font-size: 15px;
-  font-weight: 500;
-  border-radius: 18px;
-  padding: 8px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 8px;
+  padding: 10px 22px;
   transition: all 0.2s ease;
   cursor: pointer;
   border: 1px solid transparent;
@@ -83,46 +192,18 @@ body {
   gap: 8px;
   background-color: #ffffff;
   color: #000000;
-  border: 1px solid #000000;
-  font-size: 15px;
-  font-weight: 500;
-  border-radius: 18px;
-  padding: 8px 20px;
+  border: 1px solid #d4d4d4;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 8px;
+  padding: 10px 22px;
   transition: all 0.2s ease;
   cursor: pointer;
 }
 
 .btn-pill-outline:hover {
   background-color: #f5f5f5;
-}
-
-.btn-pill-mini {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  background-color: #000000;
-  color: #ffffff;
-  font-size: 11px;
-  font-weight: 600;
-  border-radius: 9999px;
-  padding: 2px 8px;
-}
-
-.text-input-capsule {
-  background-color: #ffffff;
-  color: #000000;
-  border: 1px solid #595959;
-  border-radius: 22px;
-  padding: 9px 18px;
-  font-size: 15px;
-  outline: none;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
-  width: 100%;
-}
-
-.text-input-capsule:focus {
   border-color: #000000;
-  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
 }
 
 .live-badge {
@@ -154,13 +235,6 @@ body {
     opacity: 0.4;
     transform: scale(1.3);
   }
-}
-
-.breaking-band {
-  background-color: #c31833;
-  color: #ffffff;
-  font-weight: 700;
-  font-size: 14px;
 }
 
 /* Custom scrollbar */

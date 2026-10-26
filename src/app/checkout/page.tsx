@@ -188,7 +188,7 @@ function CheckoutContent() {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label className="block text-xs font-bold text-black mb-1">
+                <label className="block text-sm font-medium text-[#222222] mb-1.5">
                   Họ và tên người nhận *
                 </label>
                 <input
@@ -196,13 +196,13 @@ function CheckoutContent() {
                   placeholder="Ví dụ: Nguyễn Văn Hùng"
                   value={customerName}
                   onChange={(e) => setCustomerName(e.target.value)}
-                  className="text-input-capsule text-xs"
+                  className="w-full h-11 bg-white text-[#111111] border border-[#d4d4d4] rounded-lg px-3.5 text-sm placeholder:text-[#999999] focus:outline-none focus:border-black focus:ring-1 focus:ring-black transition-all"
                   required
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-black mb-1">
+                <label className="block text-sm font-medium text-[#222222] mb-1.5">
                   Số điện thoại liên hệ *
                 </label>
                 <input
@@ -210,13 +210,13 @@ function CheckoutContent() {
                   placeholder="Ví dụ: 0987654321"
                   value={customerPhone}
                   onChange={(e) => setCustomerPhone(e.target.value)}
-                  className="text-input-capsule text-xs"
+                  className="w-full h-11 bg-white text-[#111111] border border-[#d4d4d4] rounded-lg px-3.5 text-sm placeholder:text-[#999999] focus:outline-none focus:border-black focus:ring-1 focus:ring-black transition-all"
                   required
                 />
               </div>
 
               <div className="sm:col-span-2">
-                <label className="block text-xs font-bold text-black mb-1">
+                <label className="block text-sm font-medium text-[#222222] mb-1.5">
                   Địa chỉ Email nhận thông báo đơn hàng *
                 </label>
                 <input
@@ -224,7 +224,7 @@ function CheckoutContent() {
                   placeholder="Ví dụ: hungnguyen@example.com"
                   value={customerEmail}
                   onChange={(e) => setCustomerEmail(e.target.value)}
-                  className="text-input-capsule text-xs"
+                  className="w-full h-11 bg-white text-[#111111] border border-[#d4d4d4] rounded-lg px-3.5 text-sm placeholder:text-[#999999] focus:outline-none focus:border-black focus:ring-1 focus:ring-black transition-all"
                   required
                 />
               </div>
@@ -242,13 +242,13 @@ function CheckoutContent() {
 
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               <div>
-                <label className="block text-xs font-bold text-black mb-1">
+                <label className="block text-sm font-medium text-[#222222] mb-1.5">
                   Tỉnh / Thành phố *
                 </label>
                 <select
                   value={shippingCity}
                   onChange={(e) => setShippingCity(e.target.value)}
-                  className="w-full text-xs border border-[#595959] rounded-[22px] px-3.5 py-2.5 bg-white text-black outline-none"
+                  className="w-full h-11 bg-white text-[#111111] border border-[#d4d4d4] rounded-lg px-3.5 text-sm focus:outline-none focus:border-black focus:ring-1 focus:ring-black transition-all cursor-pointer"
                 >
                   {PROVINCES.map((prov) => (
                     <option key={prov} value={prov}>
@@ -259,7 +259,7 @@ function CheckoutContent() {
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-black mb-1">
+                <label className="block text-sm font-medium text-[#222222] mb-1.5">
                   Quận / Huyện *
                 </label>
                 <input
@@ -267,13 +267,13 @@ function CheckoutContent() {
                   placeholder="Ví dụ: Quận 1"
                   value={shippingDistrict}
                   onChange={(e) => setShippingDistrict(e.target.value)}
-                  className="text-input-capsule text-xs"
+                  className="w-full h-11 bg-white text-[#111111] border border-[#d4d4d4] rounded-lg px-3.5 text-sm placeholder:text-[#999999] focus:outline-none focus:border-black focus:ring-1 focus:ring-black transition-all"
                   required
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-black mb-1">
+                <label className="block text-sm font-medium text-[#222222] mb-1.5">
                   Phường / Xã *
                 </label>
                 <input
@@ -281,13 +281,13 @@ function CheckoutContent() {
                   placeholder="Ví dụ: Phường Bến Nghé"
                   value={shippingWard}
                   onChange={(e) => setShippingWard(e.target.value)}
-                  className="text-input-capsule text-xs"
+                  className="w-full h-11 bg-white text-[#111111] border border-[#d4d4d4] rounded-lg px-3.5 text-sm placeholder:text-[#999999] focus:outline-none focus:border-black focus:ring-1 focus:ring-black transition-all"
                   required
                 />
               </div>
 
               <div className="sm:col-span-3">
-                <label className="block text-xs font-bold text-black mb-1">
+                <label className="block text-sm font-medium text-[#222222] mb-1.5">
                   Địa chỉ số nhà, tên đường *
                 </label>
                 <input
@@ -295,13 +295,13 @@ function CheckoutContent() {
                   placeholder="Ví dụ: Tòa nhà Bitexco, 2 Hải Triều"
                   value={shippingAddress}
                   onChange={(e) => setShippingAddress(e.target.value)}
-                  className="text-input-capsule text-xs"
+                  className="w-full h-11 bg-white text-[#111111] border border-[#d4d4d4] rounded-lg px-3.5 text-sm placeholder:text-[#999999] focus:outline-none focus:border-black focus:ring-1 focus:ring-black transition-all"
                   required
                 />
               </div>
 
               <div className="sm:col-span-3">
-                <label className="block text-xs font-bold text-black mb-1">
+                <label className="block text-sm font-medium text-[#222222] mb-1.5">
                   Ghi chú đơn hàng (Tùy chọn)
                 </label>
                 <input
@@ -309,7 +309,7 @@ function CheckoutContent() {
                   placeholder="Ví dụ: Giao giờ hành chính, gọi trước khi giao 15 phút..."
                   value={note}
                   onChange={(e) => setNote(e.target.value)}
-                  className="text-input-capsule text-xs"
+                  className="w-full h-11 bg-white text-[#111111] border border-[#d4d4d4] rounded-lg px-3.5 text-sm placeholder:text-[#999999] focus:outline-none focus:border-black focus:ring-1 focus:ring-black transition-all"
                 />
               </div>
             </div>
@@ -466,12 +466,12 @@ function CheckoutContent() {
                   placeholder="Mã giảm giá..."
                   value={couponCode}
                   onChange={(e) => setCouponCode(e.target.value.toUpperCase())}
-                  className="text-input-capsule text-xs uppercase"
+                  className="flex-1 h-10 bg-white text-[#111111] border border-[#d4d4d4] rounded-lg px-3 text-sm uppercase placeholder:text-[#999999] focus:outline-none focus:border-black focus:ring-1 focus:ring-black transition-all"
                 />
                 <button
                   type="button"
                   onClick={handleApplyCoupon}
-                  className="btn-pill-dark text-xs py-2 px-3 whitespace-nowrap"
+                  className="h-10 px-4 bg-black hover:bg-[#222222] text-white text-xs font-semibold rounded-lg whitespace-nowrap cursor-pointer transition-all active:scale-95"
                 >
                   Áp dụng
                 </button>
