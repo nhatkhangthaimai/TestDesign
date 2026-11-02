@@ -87,7 +87,7 @@ export async function POST(req: Request) {
         );
       }
 
-      let price = dbProduct.salePrice ?? dbProduct.regularPrice;
+      let price = Number(dbProduct.salePrice ?? dbProduct.regularPrice);
       let sku = dbProduct.sku;
       let currentStock = dbProduct.stock;
 
@@ -99,7 +99,7 @@ export async function POST(req: Request) {
             { status: 400 }
           );
         }
-        price = variant.price;
+        price = Number(variant.price);
         sku = variant.sku;
         currentStock = variant.stock;
       }
@@ -141,16 +141,16 @@ export async function POST(req: Request) {
         coupon.isActive &&
         (!coupon.expiresAt || new Date() <= coupon.expiresAt) &&
         (!coupon.usageLimit || coupon.usageCount < coupon.usageLimit) &&
-        verifiedSubtotal >= coupon.minOrderValue
+        verifiedSubtotal >= Number(coupon.minOrderValue)
       ) {
         validCouponId = coupon.id;
         if (coupon.discountType === "PERCENTAGE") {
-          verifiedDiscount = (verifiedSubtotal * coupon.discountValue) / 100;
-          if (coupon.maxDiscount && verifiedDiscount > coupon.maxDiscount) {
-            verifiedDiscount = coupon.maxDiscount;
+          verifiedDiscount = (verifiedSubtotal * Number(coupon.discountValue)) / 100;
+          if (coupon.maxDiscount && verifiedDiscount > Number(coupon.maxDiscount)) {
+            verifiedDiscount = Number(coupon.maxDiscount);
           }
         } else {
-          verifiedDiscount = coupon.discountValue;
+          verifiedDiscount = Number(coupon.discountValue);
         }
         verifiedDiscount = Math.min(verifiedDiscount, verifiedSubtotal);
       }

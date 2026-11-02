@@ -32,7 +32,7 @@ export async function GET() {
     const formatted = customers.map((c) => {
       const totalSpent = c.orders
         .filter((o) => o.paymentStatus === "PAID" || o.status === "DELIVERED")
-        .reduce((sum, o) => sum + o.total, 0);
+        .reduce((sum, o) => sum + Number(o.total), 0);
 
       return {
         id: c.id,

@@ -284,10 +284,22 @@ export default function Header() {
               Đồng Hồ & Smartwatch
             </Link>
             <Link
+              href="/products?category=laptop-may-tinh"
+              className="text-[#595959] hover:text-black transition-colors"
+            >
+              Laptop
+            </Link>
+            <Link
               href="/products?category=gia-dung-smart-living"
               className="text-[#595959] hover:text-black transition-colors"
             >
               Gia Dụng Thông Minh
+            </Link>
+            <Link
+              href="/products?category=phu-kien-cong-nghe"
+              className="text-[#595959] hover:text-black transition-colors"
+            >
+              Phụ Kiện
             </Link>
             <Link
               href="/products?filter=flash_sale"
@@ -384,11 +396,25 @@ export default function Header() {
               Đồng Hồ & Smartwatch
             </Link>
             <Link
+              href="/products?category=laptop-may-tinh"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="py-1.5 text-[#595959]"
+            >
+              Laptop & Máy Tính
+            </Link>
+            <Link
               href="/products?category=gia-dung-smart-living"
               onClick={() => setIsMobileMenuOpen(false)}
               className="py-1.5 text-[#595959]"
             >
               Gia Dụng Thông Minh
+            </Link>
+            <Link
+              href="/products?category=phu-kien-cong-nghe"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="py-1.5 text-[#595959]"
+            >
+              Phụ Kiện Công Nghệ
             </Link>
             <Link
               href="/products?filter=flash_sale"

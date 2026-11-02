@@ -9,6 +9,7 @@ import {
   ShoppingBag,
   Users,
   Tag,
+  Database,
   Settings,
   ArrowLeft,
   ShieldAlert,
@@ -76,6 +77,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     { href: "/admin/orders", label: "Quản Lý Đơn Hàng", icon: ShoppingBag },
     { href: "/admin/customers", label: "Quản Lý Khách Hàng", icon: Users },
     { href: "/admin/coupons", label: "Mã Giảm Giá / Voucher", icon: Tag },
+    { href: "/admin/database", label: "Dung Lượng & Big Data (5GB+)", icon: Database },
   ];
 
   return (

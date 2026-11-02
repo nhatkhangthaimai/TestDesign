@@ -46,6 +46,8 @@ interface ProductDetail {
     stock: number;
     attributesJson: string;
   }>;
+  specifications?: Array<{ id: string; groupName: string; specKey: string; specValue: string }>;
+  compatibilities?: Array<{ id: string; compatibilityType: string; notes?: string; compatibleProduct: any }>;
   reviews: Array<{
     id: string;
     rating: number;
@@ -77,7 +79,7 @@ export default function ProductDetailPage({
   // Variant & Quantity State
   const [selectedVariantId, setSelectedVariantId] = useState<string | null>(null);
   const [quantity, setQuantity] = useState(1);
-  const [activeTab, setActiveTab] = useState<"desc" | "shipping" | "reviews">("desc");
+  const [activeTab, setActiveTab] = useState<"desc" | "specs" | "shipping" | "reviews">("desc");
 
   // Review Form State
   const [reviewRating, setReviewRating] = useState(5);
@@ -444,6 +446,14 @@ export default function ProductDetailPage({
             }`}
           >
             Mô Tả Chi Tiết
+          </button>
+          <button
+            onClick={() => setActiveTab("specs")}
+            className={`pb-3 text-sm font-bold tracking-wider uppercase transition-colors relative ${
+              activeTab === "specs" ? "text-black border-b-2 border-black" : "text-[#595959] hover:text-black"
+            }`}
+          >
+            Thông Số Kỹ Thuật
           </button>
           <button
             onClick={() => setActiveTab("shipping")}

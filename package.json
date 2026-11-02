@@ -7,7 +7,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "seed": "tsx prisma/seed.ts"
+    "seed": "tsx prisma/seed.ts",
+    "use:local": "tsx scripts/switch-db.ts local",
+    "use:tidb": "tsx scripts/switch-db.ts tidb"
   },
   "prisma": {
     "seed": "tsx prisma/seed.ts"

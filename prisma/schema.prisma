@@ -7,6 +7,10 @@ generator client {
   provider = "prisma-client-js"
 }
 
+// ---------------------------------------------------------
+// 1. IDENTITY & ACCESS MANAGEMENT
+// ---------------------------------------------------------
+
 model User {
   id            String            @id @default(uuid())
   email         String            @unique
@@ -23,6 +27,9 @@ model User {
   wishlists     Wishlist[]
   cart          Cart?
   couponUsages  CouponUsage[]
+  viewEvents    ProductViewEvent[]
+  searchEvents  SearchEvent[]
+  cartEvents    CartEvent[]
 
   @@map("users")
 }
@@ -43,6 +50,10 @@ model ShippingAddress {
 
   @@map("shipping_addresses")
 }
+
+// ---------------------------------------------------------
+// 2. PRODUCT CATALOG & TAXONOMY
+// ---------------------------------------------------------
 
 model Category {
   id          String     @id @default(uuid())
@@ -77,37 +88,50 @@ model Brand {
 }
 
 model Product {
-  id             String           @id @default(uuid())
-  title          String
-  slug           String           @unique
-  description    String
-  content        String?
-  regularPrice   Float
-  salePrice      Float?
-  sku            String           @unique
-  stock          Int              @default(0)
-  isFeatured     Boolean          @default(false)
-  isNewArrival   Boolean          @default(false)
-  isBestSeller   Boolean          @default(false)
-  isFlashSale    Boolean          @default(false)
-  flashSaleStart DateTime?
-  flashSaleEnd   DateTime?
-  categoryId     String
-  brandId        String?
-  ratingsAvg     Float            @default(0)
-  ratingsCount   Int              @default(0)
-  status         String           @default("ACTIVE") // ACTIVE, DRAFT, OUT_OF_STOCK
-  createdAt      DateTime         @default(now())
-  updatedAt      DateTime         @updatedAt
-  category       Category         @relation(fields: [categoryId], references: [id], onDelete: Restrict)
-  brand          Brand?           @relation(fields: [brandId], references: [id], onDelete: SetNull)
-  images         ProductImage[]
-  variants       ProductVariant[]
-  reviews        Review[]
-  wishlists      Wishlist[]
-  cartItems      CartItem[]
-  orderItems     OrderItem[]
+  id                    String                 @id @default(uuid())
+  title                 String
+  slug                  String                 @unique
+  description           String
+  content               String?
+  regularPrice          Float
+  salePrice             Float?
+  sku                   String                 @unique
+  stock                 Int                    @default(0)
+  isFeatured            Boolean                @default(false)
+  isNewArrival          Boolean                @default(false)
+  isBestSeller          Boolean                @default(false)
+  isFlashSale           Boolean                @default(false)
+  flashSaleStart        DateTime?
+  flashSaleEnd          DateTime?
+  categoryId            String
+  brandId               String?
+  ratingsAvg            Float                  @default(0)
+  ratingsCount          Int                    @default(0)
+  status                String                 @default("ACTIVE") // ACTIVE, DRAFT, OUT_OF_STOCK
+  warrantyMonths        Int                    @default(12)
+  originCountry         String?                @default("Chính Hãng")
+  createdAt             DateTime               @default(now())
+  updatedAt             DateTime               @updatedAt
+  category              Category               @relation(fields: [categoryId], references: [id], onDelete: Restrict)
+  brand                 Brand?                 @relation(fields: [brandId], references: [id], onDelete: SetNull)
+  images                ProductImage[]
+  variants              ProductVariant[]
+  reviews               Review[]
+  wishlists             Wishlist[]
+  cartItems             CartItem[]
+  orderItems            OrderItem[]
+  specifications        ProductSpecification[]
+  compatibilities       ProductCompatibility[] @relation("ProductToCompat")
+  compatibleTargets     ProductCompatibility[] @relation("CompatTarget")
+  priceHistories        ProductPriceHistory[]
+  inventories           Inventory[]
+  inventoryTransactions InventoryTransaction[]
+  viewEvents            ProductViewEvent[]
 
+  @@index([categoryId])
+  @@index([brandId])
+  @@index([status])
+  @@index([regularPrice])
   @@map("products")
 }
 
@@ -121,25 +145,138 @@ model ProductImage {
   createdAt DateTime @default(now())
   product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
 
+  @@index([productId])
   @@map("product_images")
 }
 
 model ProductVariant {
-  id             String      @id @default(uuid())
-  productId      String
-  name           String
-  sku            String      @unique
-  price          Float
-  stock          Int         @default(0)
-  attributesJson String      @default("{}") // e.g. {"color":"Đen", "storage":"256GB"}
-  createdAt      DateTime    @default(now())
-  updatedAt      DateTime    @updatedAt
-  product        Product     @relation(fields: [productId], references: [id], onDelete: Cascade)
-  cartItems      CartItem[]
-  orderItems     OrderItem[]
+  id                    String                 @id @default(uuid())
+  productId             String
+  name                  String
+  sku                   String                 @unique
+  price                 Float
+  stock                 Int                    @default(0)
+  attributesJson        String                 @default("{}") // e.g. {"color":"Đen", "storage":"256GB"}
+  createdAt             DateTime               @default(now())
+  updatedAt             DateTime               @updatedAt
+  product               Product                @relation(fields: [productId], references: [id], onDelete: Cascade)
+  cartItems             CartItem[]
+  orderItems            OrderItem[]
+  inventories           Inventory[]
+  inventoryTransactions InventoryTransaction[]
 
+  @@index([productId])
   @@map("product_variants")
 }
+
+model ProductSpecification {
+  id        String   @id @default(uuid())
+  productId String
+  groupName String   // e.g. "Hiệu Năng & Vi Xử Lý", "Màn Hình", "Pin & Sạc"
+  specKey   String   // e.g. "Chipset", "Độ Phân Giải", "Dung Lượng Pin"
+  specValue String   // e.g. "Apple A18 Pro 3nm", "2868 x 1320 pixels", "4685 mAh"
+  sortOrder Int      @default(0)
+  createdAt DateTime @default(now())
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@index([productId])
+  @@index([specKey])
+  @@map("product_specifications")
+}
+
+model ProductAttribute {
+  id          String                  @id @default(uuid())
+  name        String                  // e.g. "Màu sắc", "Bộ nhớ trong"
+  code        String                  @unique // e.g. "color", "storage"
+  description String?
+  values      ProductAttributeValue[]
+
+  @@map("product_attributes")
+}
+
+model ProductAttributeValue {
+  id          String           @id @default(uuid())
+  attributeId String
+  value       String           // e.g. "Titan Sa Mạc", "512GB"
+  code        String           // e.g. "desert_titanium", "512gb"
+  attribute   ProductAttribute @relation(fields: [attributeId], references: [id], onDelete: Cascade)
+
+  @@index([attributeId])
+  @@map("product_attribute_values")
+}
+
+model ProductCompatibility {
+  id                  String   @id @default(uuid())
+  productId           String
+  compatibleProductId String
+  compatibilityType   String   @default("ACCESSORY") // ACCESSORY, REPLACEMENT, COMPONENT
+  notes               String?
+  createdAt           DateTime @default(now())
+  product             Product  @relation("ProductToCompat", fields: [productId], references: [id], onDelete: Cascade)
+  compatibleProduct   Product  @relation("CompatTarget", fields: [compatibleProductId], references: [id], onDelete: Cascade)
+
+  @@unique([productId, compatibleProductId])
+  @@index([productId])
+  @@map("product_compatibilities")
+}
+
+model ProductPriceHistory {
+  id           String   @id @default(uuid())
+  productId    String
+  oldPrice     Float
+  newPrice     Float
+  changeReason String?  // e.g. "Điều chỉnh theo biến động tỷ giá", "Flash Sale tuần"
+  changedBy    String?  @default("Hệ thống tự động")
+  effectiveAt  DateTime @default(now())
+  product      Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@index([productId, effectiveAt])
+  @@map("product_price_histories")
+}
+
+// ---------------------------------------------------------
+// 3. INVENTORY & WAREHOUSE MANAGEMENT
+// ---------------------------------------------------------
+
+model Inventory {
+  id            String          @id @default(uuid())
+  productId     String
+  variantId     String?
+  warehouseCode String          @default("WH-HCM-01") // WH-HCM-01, WH-HN-01, WH-DN-01
+  quantity      Int             @default(0)
+  reservedQty   Int             @default(0)
+  safetyStock   Int             @default(10)
+  lastCountAt   DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+  product       Product         @relation(fields: [productId], references: [id], onDelete: Cascade)
+  variant       ProductVariant? @relation(fields: [variantId], references: [id], onDelete: SetNull)
+
+  @@index([productId])
+  @@index([warehouseCode])
+  @@map("inventories")
+}
+
+model InventoryTransaction {
+  id              String          @id @default(uuid())
+  productId       String
+  variantId       String?
+  warehouseCode   String          @default("WH-HCM-01")
+  transactionType String          // RECEIVE, SHIP, ADJUST, RETURN, AUDIT
+  quantity        Int             // Dương cho nhập/hoàn, âm cho xuất/giao
+  referenceNumber String?         // e.g. "PO-2026-0982", "SO-ORD-2026-8812"
+  note            String?
+  createdAt       DateTime        @default(now())
+  product         Product         @relation(fields: [productId], references: [id], onDelete: Cascade)
+  variant         ProductVariant? @relation(fields: [variantId], references: [id], onDelete: SetNull)
+
+  @@index([productId, createdAt])
+  @@index([transactionType])
+  @@map("inventory_transactions")
+}
+
+// ---------------------------------------------------------
+// 4. SHOPPING CART & ORDERS
+// ---------------------------------------------------------
 
 model Cart {
   id        String     @id @default(uuid())
@@ -166,6 +303,7 @@ model CartItem {
   product   Product         @relation(fields: [productId], references: [id], onDelete: Cascade)
   variant   ProductVariant? @relation(fields: [variantId], references: [id], onDelete: SetNull)
 
+  @@index([cartId])
   @@map("cart_items")
 }
 
@@ -190,6 +328,7 @@ model Order {
   paymentStatus    String               @default("PENDING") // PENDING, PAID, FAILED, REFUNDED
   couponCode       String?
   transactionId    String?
+  isSimulated      Boolean              @default(false) // Phân biệt đơn hàng thực vs đơn mô phỏng
   createdAt        DateTime             @default(now())
   updatedAt        DateTime             @updatedAt
   user             User?                @relation(fields: [userId], references: [id], onDelete: SetNull)
@@ -198,6 +337,9 @@ model Order {
   payment          Payment?
   couponUsages     CouponUsage[]
 
+  @@index([status])
+  @@index([paymentStatus])
+  @@index([createdAt])
   @@map("orders")
 }
 
@@ -215,6 +357,7 @@ model OrderItem {
   product      Product         @relation(fields: [productId], references: [id], onDelete: Restrict)
   variant      ProductVariant? @relation(fields: [variantId], references: [id], onDelete: SetNull)
 
+  @@index([orderId])
   @@map("order_items")
 }
 
@@ -227,6 +370,7 @@ model OrderStatusHistory {
   createdAt DateTime @default(now())
   order     Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
 
+  @@index([orderId])
   @@map("order_status_history")
 }
 
@@ -234,7 +378,7 @@ model Payment {
   id              String    @id @default(uuid())
   orderId         String    @unique
   amount          Float
-  provider        String    // COD, VNPAY, MOMO
+  provider        String    // COD, VNPAY, MOMO, BANK_TRANSFER
   status          String    @default("PENDING") // PENDING, PAID, FAILED, REFUNDED
   transactionRef  String?
   rawResponseJson String?
@@ -276,6 +420,8 @@ model CouponUsage {
   user            User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
   order           Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
 
+  @@index([couponId])
+  @@index([orderId])
   @@map("coupon_usages")
 }
 
@@ -287,11 +433,13 @@ model Review {
   title              String?
   comment            String
   isVerifiedPurchase Boolean  @default(true)
+  isSimulated        Boolean  @default(false) // Phân biệt review thực vs benchmark
   createdAt          DateTime @default(now())
   updatedAt          DateTime @updatedAt
   product            Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
   user               User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
+  @@index([productId])
   @@map("reviews")
 }
 
@@ -331,4 +479,135 @@ model StoreSetting {
   updatedAt   DateTime @updatedAt
 
   @@map("store_settings")
+}
+
+// ---------------------------------------------------------
+// 5. BIG DATA TELEMETRY, ANALYTICS & AUDIT LOGS
+// ---------------------------------------------------------
+
+model ProductViewEvent {
+  id                 String   @id @default(uuid())
+  sessionId          String
+  userId             String?
+  productId          String
+  referrer           String?  // e.g. "https://www.google.com/search?q=iphone+16+pro+max"
+  userAgent          String?  // e.g. "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36..."
+  ipAddress          String?  // e.g. "14.232.208.45"
+  dwellTimeSeconds   Int      @default(0)
+  viewportResolution String?  // e.g. "1920x1080", "390x844"
+  createdAt          DateTime @default(now())
+  product            Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  user               User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  @@index([productId, createdAt])
+  @@index([sessionId])
+  @@index([userId])
+  @@index([createdAt])
+  @@map("product_view_events")
+}
+
+model SearchEvent {
+  id               String   @id @default(uuid())
+  sessionId        String?
+  userId           String?
+  query            String
+  normalizedQuery  String?
+  filtersJson      String?  @default("{}")
+  resultCount      Int      @default(0)
+  executionMs      Float    @default(0)
+  clickedProductId String?
+  createdAt        DateTime @default(now())
+  user             User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  @@index([query])
+  @@index([createdAt])
+  @@map("search_events")
+}
+
+model CartEvent {
+  id        String   @id @default(uuid())
+  sessionId String
+  userId    String?
+  productId String
+  variantId String?
+  action    String   // ADD, REMOVE, UPDATE_QTY, CLEAR
+  quantity  Int      @default(1)
+  price     Float
+  createdAt DateTime @default(now())
+  user      User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  @@index([sessionId])
+  @@index([userId])
+  @@index([createdAt])
+  @@map("cart_events")
+}
+
+model AuditLog {
+  id          String   @id @default(uuid())
+  actorId     String?
+  actorRole   String?  @default("SYSTEM") // SYSTEM, ROLE_ADMIN, ROLE_USER
+  action      String   // e.g. "PRODUCT_PRICE_UPDATED", "INVENTORY_RESTOCKED", "ORDER_CREATED"
+  entityType  String   // e.g. "Product", "Inventory", "Order", "Coupon"
+  entityId    String?
+  ipAddress   String?
+  userAgent   String?
+  changesJson String?  // JSON snapshot of previous/next values
+  createdAt   DateTime @default(now())
+
+  @@index([entityType, entityId])
+  @@index([action])
+  @@index([createdAt])
+  @@map("audit_logs")
+}
+
+// ---------------------------------------------------------
+// 6. BENCHMARKING & SCALE VERIFICATION
+// ---------------------------------------------------------
+
+model BenchmarkSession {
+  id               String                 @id @default(uuid())
+  sessionCode      String                 @unique // e.g. "BENCHMARK-5GB-RUN-01"
+  targetSizeBytes  BigInt                 @default(0)
+  currentSizeBytes BigInt                 @default(0)
+  status           String                 @default("IN_PROGRESS") // IN_PROGRESS, COMPLETED, PAUSED, FAILED
+  totalRecords     Int                    @default(0)
+  errorCount       Int                    @default(0)
+  notes            String?
+  startedAt        DateTime               @default(now())
+  completedAt      DateTime?
+  transactions     BenchmarkTransaction[]
+
+  @@map("benchmark_sessions")
+}
+
+model BenchmarkTransaction {
+  id             String           @id @default(uuid())
+  sessionId      String
+  batchNumber    Int
+  recordType     String           // VIEW_EVENT, SEARCH_EVENT, AUDIT_LOG, INVENTORY_TX
+  recordCount    Int
+  executionTimeMs Float
+  bytesAdded     BigInt           @default(0)
+  status         String           @default("SUCCESS")
+  createdAt      DateTime         @default(now())
+  session        BenchmarkSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+
+  @@index([sessionId, batchNumber])
+  @@index([createdAt])
+  @@map("benchmark_transactions")
+}
+
+model DataImportJob {
+  id               String    @id @default(uuid())
+  jobName          String
+  stage            String    // 100MB, 500MB, 1GB, 3GB, 5GB
+  targetSize       String
+  status           String    @default("PENDING") // PENDING, RUNNING, COMPLETED, FAILED
+  recordsProcessed Int       @default(0)
+  currentBytes     BigInt    @default(0)
+  errorMessage     String?
+  startedAt        DateTime?
+  finishedAt       DateTime?
+
+  @@map("data_import_jobs")
 }

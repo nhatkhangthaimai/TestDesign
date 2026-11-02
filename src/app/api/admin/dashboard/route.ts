@@ -16,7 +16,7 @@ export async function GET() {
       },
       select: { total: true },
     });
-    const totalRevenue = paidOrders.reduce((sum, o) => sum + o.total, 0);
+    const totalRevenue = paidOrders.reduce((sum, o) => sum + Number(o.total), 0);
 
     // 2. Order counts by status
     const totalOrders = await prisma.order.count();

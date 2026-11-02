@@ -44,13 +44,13 @@ export async function POST(req: Request) {
       );
     }
 
-    if (subtotal < coupon.minOrderValue) {
+    if (subtotal < Number(coupon.minOrderValue)) {
       return NextResponse.json(
         {
           error: `Đơn hàng tối thiểu phải từ ${new Intl.NumberFormat("vi-VN", {
             style: "currency",
             currency: "VND",
-          }).format(coupon.minOrderValue)} để áp dụng mã này`,
+          }).format(Number(coupon.minOrderValue))} để áp dụng mã này`,
         },
         { status: 400 }
       );
@@ -58,12 +58,12 @@ export async function POST(req: Request) {
 
     let discountAmount = 0;
     if (coupon.discountType === "PERCENTAGE") {
-      discountAmount = (subtotal * coupon.discountValue) / 100;
-      if (coupon.maxDiscount && discountAmount > coupon.maxDiscount) {
-        discountAmount = coupon.maxDiscount;
+      discountAmount = (subtotal * Number(coupon.discountValue)) / 100;
+      if (coupon.maxDiscount && discountAmount > Number(coupon.maxDiscount)) {
+        discountAmount = Number(coupon.maxDiscount);
       }
     } else {
-      discountAmount = coupon.discountValue;
+      discountAmount = Number(coupon.discountValue);
     }
 
     // Ensure discount does not exceed subtotal
