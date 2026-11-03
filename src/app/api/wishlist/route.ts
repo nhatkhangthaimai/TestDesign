@@ -18,7 +18,21 @@ export async function GET(req: Request) {
       },
     });
 
-    return NextResponse.json({ wishlist: items });
+    const safeItems = items.map((it) => ({
+      ...it,
+      product: it.product
+        ? {
+            ...it.product,
+            regularPrice: Number(it.product.regularPrice),
+            salePrice: it.product.salePrice != null ? Number(it.product.salePrice) : null,
+            ratingsAvg: Number(it.product.ratingsAvg || 0),
+            ratingsCount: Number(it.product.ratingsCount || 0),
+            stock: Number(it.product.stock),
+          }
+        : null,
+    }));
+
+    return NextResponse.json({ wishlist: safeItems });
   } catch (error) {
     console.error("Fetch wishlist error:", error);
     return NextResponse.json({ error: "Lỗi tải danh sách yêu thích" }, { status: 500 });

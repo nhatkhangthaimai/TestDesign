@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
+import Link from "next/link";
 import Image from "next/image";
 import {
   ShieldCheck,
@@ -13,6 +14,7 @@ import {
   ArrowRight,
   AlertCircle,
   Tag,
+  MapPin,
 } from "lucide-react";
 import { useCart } from "@/context/CartContext";
 import { useAuth } from "@/context/AuthContext";
@@ -57,14 +59,40 @@ function CheckoutContent() {
 
   const [submitting, setSubmitting] = useState(false);
 
-  // Sync user info when auth loaded
+  // Saved Addresses state
+  const [savedAddresses, setSavedAddresses] = useState<any[]>([]);
+  const [selectedAddressId, setSelectedAddressId] = useState<string | null>(null);
+
+  // Sync user info and load saved addresses when auth loaded
   useEffect(() => {
     if (user) {
       if (!customerName) setCustomerName(user.name);
       if (!customerEmail) setCustomerEmail(user.email);
       if (!customerPhone && user.phone) setCustomerPhone(user.phone);
+
+      fetch("/api/addresses")
+        .then((res) => res.json())
+        .then((data) => {
+          const list = data.addresses || [];
+          setSavedAddresses(list);
+          const def = list.find((a: any) => a.isDefault) || list[0];
+          if (def) {
+            handleSelectSavedAddress(def);
+          }
+        })
+        .catch(() => {});
     }
   }, [user]);
+
+  const handleSelectSavedAddress = (addr: any) => {
+    setSelectedAddressId(addr.id);
+    if (addr.recipientName) setCustomerName(addr.recipientName);
+    if (addr.phone) setCustomerPhone(addr.phone);
+    if (addr.street) setShippingAddress(addr.street);
+    if (addr.city) setShippingCity(addr.city);
+    if (addr.district) setShippingDistrict(addr.district);
+    if (addr.ward) setShippingWard(addr.ward);
+  };
 
   // Verify initial coupon if present
   useEffect(() => {
@@ -239,6 +267,45 @@ function CheckoutContent() {
               </span>
               Địa Chỉ Giao Hàng Tại Việt Nam
             </h3>
+
+            {savedAddresses.length > 0 && (
+              <div className="p-3.5 bg-[#f8f8f8] border border-[#e5e5e5] rounded-lg space-y-2.5">
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-bold text-black flex items-center gap-1.5">
+                    <MapPin className="w-3.5 h-3.5 text-[#fa9000]" />
+                    Chọn nhanh từ Sổ địa chỉ đã lưu:
+                  </span>
+                  <Link href="/account" className="text-[11px] text-[#595959] hover:text-black underline font-medium">
+                    Quản lý sổ địa chỉ
+                  </Link>
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                  {savedAddresses.map((addr) => (
+                    <button
+                      key={addr.id}
+                      type="button"
+                      onClick={() => handleSelectSavedAddress(addr)}
+                      className={`p-2.5 text-left rounded-md border text-xs transition-all ${
+                        selectedAddressId === addr.id
+                          ? "bg-black text-white border-black shadow-xs"
+                          : "bg-white text-black border-[#d4d4d4] hover:border-black"
+                      }`}
+                    >
+                      <div className="flex items-center justify-between font-bold">
+                        <span>{addr.recipientName}</span>
+                        {addr.isDefault && (
+                          <span className={`text-[9px] px-1.5 py-0.5 rounded font-bold uppercase ${selectedAddressId === addr.id ? "bg-[#fa9000] text-black" : "bg-[#f0f0f0] text-[#595959]"}`}>
+                            Mặc định
+                          </span>
+                        )}
+                      </div>
+                      <p className="text-[11px] opacity-80 mt-0.5 truncate">{addr.street}, {addr.ward}, {addr.district}, {addr.city}</p>
+                      <p className="text-[10px] opacity-70">{addr.phone}</p>
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
 
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               <div>

@@ -2,7 +2,8 @@
 
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
-import { Plus, Trash2, Edit, Check, X, Search, Sparkles } from "lucide-react";
+import Link from "next/link";
+import { Plus, Trash2, Pencil, Eye, Check, X, Search, Sparkles } from "lucide-react";
 import { formatVND } from "@/lib/utils";
 import { useToast } from "@/context/ToastContext";
 
@@ -241,13 +242,30 @@ export default function AdminProductsPage() {
                     </span>
                   </td>
                   <td className="p-3 text-right">
-                    <button
-                      onClick={() => handleDeleteProduct(p.id, p.title)}
-                      className="p-1.5 text-[#bc0000] hover:bg-[#bc0000]/20 rounded transition-colors"
-                      title="Xóa/Ẩn sản phẩm"
-                    >
-                      <Trash2 className="w-4 h-4" />
-                    </button>
+                    <div className="flex items-center justify-end gap-1">
+                      <Link
+                        href={`/products/${p.slug}`}
+                        target="_blank"
+                        className="p-1.5 text-blue-400 hover:bg-blue-400/20 rounded transition-colors"
+                        title="Xem chi tiết trên website"
+                      >
+                        <Eye className="w-4 h-4" />
+                      </Link>
+                      <Link
+                        href={`/admin/products/${p.id}/edit`}
+                        className="p-1.5 text-[#dba200] hover:bg-[#dba200]/20 rounded transition-colors"
+                        title="Chỉnh sửa sản phẩm"
+                      >
+                        <Pencil className="w-4 h-4" />
+                      </Link>
+                      <button
+                        onClick={() => handleDeleteProduct(p.id, p.title)}
+                        className="p-1.5 text-[#bc0000] hover:bg-[#bc0000]/20 rounded transition-colors"
+                        title="Xóa/Ẩn sản phẩm"
+                      >
+                        <Trash2 className="w-4 h-4" />
+                      </button>
+                    </div>
                   </td>
                 </tr>
               ))}
