@@ -69,3 +69,4 @@ Nhiều lập trình viên thường thắc mắc tại sao cùng một tập d�
 1. Toàn bộ các bảng lớn (`audit_logs`, `search_events`, `product_view_events`) đều được đánh chỉ mục `@@index([createdAt])`, `@@index([sessionId])`, `@@index([userId])`.
 2. Không bao giờ chạy lệnh `SELECT *` không có mệnh đề `LIMIT` trên các bảng này.
 3. Trang Dashboard quản trị tính toán doanh thu trực tiếp từ bảng `orders` thực tế (`WHERE paymentStatus = 'PAID' OR status = 'DELIVERED'`), tuyệt đối không đụng đến các bảng benchmark log, đảm bảo tốc độ phản hồi API luôn dưới **10ms**.
+

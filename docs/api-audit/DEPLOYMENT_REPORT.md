@@ -61,3 +61,4 @@ Sau khi deploy hoàn tất, mở trình duyệt hoặc chạy lệnh kiểm tra:
    ```bash
    curl http://54.255.194.4/api/products?limit=5
    ```
+

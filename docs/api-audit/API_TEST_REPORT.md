@@ -115,3 +115,4 @@
   ✓ Admin: Store Settings (Status: 200)
   ✓ Admin: Database Storage & Health Telemetry (Status: 200)
 ```
+

@@ -5,12 +5,14 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-export function formatVND(amount: number | null | undefined): string {
+export function formatVND(amount: number | string | null | undefined): string {
   if (amount == null) return "0 ₫";
+  const num = typeof amount === "number" ? amount : parseFloat(String(amount));
+  if (isNaN(num)) return "0 ₫";
   return new Intl.NumberFormat("vi-VN", {
     style: "currency",
     currency: "VND",
-  }).format(amount);
+  }).format(num);
 }
 
 export function formatDate(date: string | Date | null | undefined): string {
@@ -25,7 +27,15 @@ export function formatDate(date: string | Date | null | undefined): string {
   }).format(d);
 }
 
-export function calculateDiscount(regular: number, sale?: number | null): number {
-  if (!sale || sale >= regular) return 0;
-  return Math.round(((regular - sale) / regular) * 100);
+export function calculateDiscount(
+  regular: number | string,
+  sale?: number | string | null
+): number {
+  const regNum = typeof regular === "number" ? regular : parseFloat(String(regular));
+  const saleNum =
+    sale != null ? (typeof sale === "number" ? sale : parseFloat(String(sale))) : null;
+  if (!saleNum || isNaN(regNum) || isNaN(saleNum) || saleNum >= regNum || regNum <= 0) {
+    return 0;
+  }
+  return Math.round(((regNum - saleNum) / regNum) * 100);
 }

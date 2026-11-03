@@ -32,3 +32,4 @@ export async function GET(
     return NextResponse.json({ error: "Failed to fetch category", details: error.message }, { status: 500 });
   }
 }
+

@@ -6,17 +6,25 @@ echo "          TIẾN TRÌNH TỰ ĐỘNG TRIỂN KHAI AJ COMMERCE LÊN AWS EC2
 echo "================================================================================"
 
 # 1. Cấu hình Swap 2GB (Bảo vệ tràn RAM khi build trên EC2 t2.micro / t3.micro)
-if [ ! -f /swapfile ]; then
+if [ ! -s /swapfile ]; then
   echo "--> Đang tạo 2GB Swap Memory để hỗ trợ RAM..."
+  sudo swapoff /swapfile 2>/dev/null || true
+  sudo rm -f /swapfile 2>/dev/null || true
   sudo fallocate -l 2G /swapfile || sudo dd if=/dev/zero of=/swapfile bs=1M count=2048
   sudo chmod 600 /swapfile
   sudo mkswap /swapfile
   sudo swapon /swapfile
-  echo '/swapfile none swap sw 0 0' | sudo tee -a /etc/fstab
+  grep -q "/swapfile" /etc/fstab || echo '/swapfile none swap sw 0 0' | sudo tee -a /etc/fstab
   echo "✓ Đã kích hoạt 2GB Swap thành công!"
 else
   echo "✓ Swap đã tồn tại, đảm bảo swap đang bật..."
   sudo swapon /swapfile 2>/dev/null || true
+fi
+
+# Kéo mã nguồn mới nhất nếu đang ở trong git repository
+if [ -d .git ]; then
+  echo "--> Đang cập nhật mã nguồn mới nhất từ GitHub (git pull origin main)..."
+  git pull origin main || true
 fi
 
 # Tự động ghi nhớ NODE_OPTIONS vào ~/.bashrc để không bao giờ bị tràn bộ nhớ V8

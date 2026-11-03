@@ -182,3 +182,4 @@ export async function PATCH(req: NextRequest) {
     return NextResponse.json({ error: "Failed to adjust inventory", details: error.message }, { status: 500 });
   }
 }
+

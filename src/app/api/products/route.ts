@@ -90,10 +90,24 @@ export async function GET(req: Request) {
       },
     });
 
+    const formattedProducts = products.map((p) => ({
+      ...p,
+      regularPrice: Number(p.regularPrice),
+      salePrice: p.salePrice != null ? Number(p.salePrice) : null,
+      ratingsAvg: Number(p.ratingsAvg || 0),
+      ratingsCount: Number(p.ratingsCount || 0),
+      stock: Number(p.stock || 0),
+      variants: (p.variants || []).map((v) => ({
+        ...v,
+        price: Number(v.price),
+        stock: Number(v.stock),
+      })),
+    }));
+
     const totalPages = Math.ceil(total / limit);
 
     return NextResponse.json({
-      products,
+      products: formattedProducts,
       pagination: {
         total,
         page,

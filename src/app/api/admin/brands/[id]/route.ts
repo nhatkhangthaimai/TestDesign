@@ -68,3 +68,4 @@ export async function DELETE(
     return NextResponse.json({ error: "Failed to delete brand", details: error.message }, { status: 500 });
   }
 }
+

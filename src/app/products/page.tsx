@@ -457,7 +457,7 @@ function ProductsContent() {
                         <h3 className="font-bold text-base text-black">{p.title}</h3>
                         <div className="flex items-center gap-1.5 mt-1 text-amber-500 text-xs">
                           <Star className="w-3.5 h-3.5 fill-amber-500" />
-                          <span className="font-bold text-black">{p.ratingsAvg.toFixed(1)}</span>
+                          <span className="font-bold text-black">{Number(p.ratingsAvg || 0).toFixed(1)}</span>
                           <span className="text-[#595959]">({p.ratingsCount} đánh giá)</span>
                         </div>
                       </div>

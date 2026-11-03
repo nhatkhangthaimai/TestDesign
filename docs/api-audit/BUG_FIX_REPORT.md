@@ -47,3 +47,4 @@ Trong quá trình audit mã nguồn, kiểm tra cơ sở dữ liệu TiDB Cloud 
 
 - **Hiện tượng**: TiDB Cloud lưu trữ tiền tệ dưới dạng `Decimal(14,2)`, khi Prisma truy vấn trả về đối tượng Decimal, các phép toán `+`, `-`, `*` trong JavaScript có thể phát sinh lỗi NaN hoặc nối chuỗi thay vì tính toán số học.
 - **Khắc phục**: Đã bọc toán tử ép kiểu an toàn `Number(...)` tại toàn bộ các controller: `coupons/apply`, `cart`, `orders`, `dashboard`, đảm bảo kết quả chính xác 100% trên cả 2 môi trường DB.
+

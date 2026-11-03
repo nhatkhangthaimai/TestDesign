@@ -54,3 +54,4 @@ export async function GET(
     return NextResponse.json({ error: "Failed to fetch payment status", details: error.message }, { status: 500 });
   }
 }
+

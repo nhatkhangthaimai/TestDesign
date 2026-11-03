@@ -62,3 +62,4 @@ export async function DELETE(
     return NextResponse.json({ error: "Failed to delete banner", details: error.message }, { status: 500 });
   }
 }
+

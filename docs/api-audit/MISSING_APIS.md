@@ -37,3 +37,4 @@ Trong quá trình audit kiến trúc toàn sàn và quét tương tác người 
 18. **`GET & POST /api/admin/brands`** và **`PUT & DELETE /api/admin/brands/[id]`**: Quản lý thương hiệu đối tác.
 19. **`GET & PATCH /api/admin/inventory`**: Quản lý tồn kho theo từng kho hàng (`WH-HCM-01`, `WH-HN-01`), cảnh báo hàng sắp hết và ghi nhận lịch sử biến động kho `InventoryTransaction`.
 20. **`GET & POST & PUT & DELETE /api/admin/banners`**: Quản lý banner quảng cáo trang chủ.
+

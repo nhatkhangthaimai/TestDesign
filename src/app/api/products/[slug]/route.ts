@@ -79,9 +79,36 @@ export async function GET(
       },
     });
 
+    const formattedProduct = {
+      ...product,
+      regularPrice: Number(product.regularPrice),
+      salePrice: product.salePrice != null ? Number(product.salePrice) : null,
+      ratingsAvg: Number(product.ratingsAvg || 0),
+      ratingsCount: Number(product.ratingsCount || 0),
+      stock: Number(product.stock || 0),
+      variants: (product.variants || []).map((v) => ({
+        ...v,
+        price: Number(v.price),
+        stock: Number(v.stock),
+      })),
+      reviews: (product.reviews || []).map((r) => ({
+        ...r,
+        rating: Number(r.rating),
+      })),
+    };
+
+    const formattedRelated = (relatedProducts || []).map((p) => ({
+      ...p,
+      regularPrice: Number(p.regularPrice),
+      salePrice: p.salePrice != null ? Number(p.salePrice) : null,
+      ratingsAvg: Number(p.ratingsAvg || 0),
+      ratingsCount: Number(p.ratingsCount || 0),
+      stock: Number(p.stock || 0),
+    }));
+
     return NextResponse.json({
-      product,
-      relatedProducts,
+      product: formattedProduct,
+      relatedProducts: formattedRelated,
     });
   } catch (error) {
     console.error("Fetch product by slug error:", error);

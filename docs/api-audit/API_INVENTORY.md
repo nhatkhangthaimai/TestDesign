@@ -79,3 +79,4 @@
 | **65** | `GET` | `/api/admin/settings` | Lấy cấu hình hệ thống cửa hàng | Có | Tất cả | **PASS** |
 | **66** | `PUT` | `/api/admin/settings` | Cập nhật thông tin cửa hàng, hotline, email liên hệ | Có | `ROLE_ADMIN` | **PASS** |
 | **67** | `GET` | `/api/admin/database` | Báo cáo dung lượng đĩa TiDB Cloud / SQLite, số bản ghi bảng lớn | Có | `ROLE_ADMIN` | **PASS** |
+

@@ -11,10 +11,7 @@ import {
   Truck,
   ShieldCheck,
   RotateCcw,
-  Check,
   ArrowRight,
-  MessageSquare,
-  Sparkles,
 } from "lucide-react";
 import ProductCard from "@/components/product/ProductCard";
 import { formatVND, formatDate, calculateDiscount } from "@/lib/utils";
@@ -72,6 +69,7 @@ export default function ProductDetailPage({
   const [product, setProduct] = useState<ProductDetail | null>(null);
   const [relatedProducts, setRelatedProducts] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const [fetchError, setFetchError] = useState<string | null>(null);
 
   // Gallery state
   const [selectedImage, setSelectedImage] = useState<string>("");
@@ -87,45 +85,106 @@ export default function ProductDetailPage({
   const [submittingReview, setSubmittingReview] = useState(false);
 
   useEffect(() => {
+    let isMounted = true;
     async function loadProduct() {
       setLoading(true);
+      setFetchError(null);
       try {
-        const res = await fetch(`/api/products/${slug}`);
-        if (res.ok) {
-          const data = await res.json();
-          setProduct(data.product);
-          setRelatedProducts(data.relatedProducts || []);
-          if (data.product.images?.length > 0) {
-            setSelectedImage(data.product.images[0].url);
+        const res = await fetch(`/api/products/${encodeURIComponent(slug)}`);
+        if (!res.ok) {
+          if (res.status === 404) {
+            if (isMounted) setProduct(null);
+          } else {
+            throw new Error(`Server returned status ${res.status}`);
           }
-          if (data.product.variants?.length > 0) {
-            setSelectedVariantId(data.product.variants[0].id);
+          return;
+        }
+
+        const data = await res.json();
+        if (isMounted && data.product) {
+          const raw = data.product;
+          // Coerce all decimal/numeric fields safely
+          const safeProduct: ProductDetail = {
+            ...raw,
+            regularPrice: Number(raw.regularPrice || 0),
+            salePrice: raw.salePrice != null ? Number(raw.salePrice) : null,
+            ratingsAvg: Number(raw.ratingsAvg || 0),
+            ratingsCount: Number(raw.ratingsCount || 0),
+            stock: Number(raw.stock || 0),
+            images: raw.images || [],
+            category: raw.category || { id: "", name: "Công Nghệ", slug: "all" },
+            brand: raw.brand || null,
+            variants: (raw.variants || []).map((v: any) => ({
+              ...v,
+              price: Number(v.price || 0),
+              stock: Number(v.stock || 0),
+            })),
+            specifications: raw.specifications || [],
+            compatibilities: raw.compatibilities || [],
+            reviews: (raw.reviews || []).map((r: any) => ({
+              ...r,
+              rating: Number(r.rating || 5),
+            })),
+          };
+
+          setProduct(safeProduct);
+          setRelatedProducts(data.relatedProducts || []);
+          if (safeProduct.images.length > 0) {
+            setSelectedImage(safeProduct.images[0].url);
+          }
+          if (safeProduct.variants.length > 0) {
+            setSelectedVariantId(safeProduct.variants[0].id);
           }
         }
-      } catch (err) {
+      } catch (err: any) {
         console.error("Error loading product:", err);
+        if (isMounted) setFetchError(err.message || "Lỗi tải thông tin sản phẩm");
       } finally {
-        setLoading(false);
+        if (isMounted) setLoading(false);
       }
     }
     loadProduct();
+
+    return () => {
+      isMounted = false;
+    };
   }, [slug]);
 
   if (loading) {
     return (
-      <div className="max-w-7xl mx-auto px-4 sm:px-8 py-16 text-center">
+      <div className="max-w-7xl mx-auto px-4 sm:px-8 py-20 text-center animate-pulse">
         <div className="w-12 h-12 border-4 border-black border-t-transparent rounded-full animate-spin mx-auto mb-4" />
-        <p className="text-sm text-[#595959]">Đang tải chi tiết sản phẩm...</p>
+        <p className="text-sm font-semibold text-[#595959]">Đang tải chi tiết sản phẩm...</p>
+      </div>
+    );
+  }
+
+  if (fetchError) {
+    return (
+      <div className="max-w-7xl mx-auto px-4 sm:px-8 py-20 text-center">
+        <h2 className="text-2xl font-bold text-black mb-2">Không thể tải thông tin sản phẩm</h2>
+        <p className="text-sm text-[#595959] mb-6">{fetchError}</p>
+        <button
+          onClick={() => window.location.reload()}
+          className="btn-pill-dark px-6 py-2.5 text-xs mr-3"
+        >
+          Thử lại
+        </button>
+        <Link href="/products" className="btn-pill-outline px-6 py-2.5 text-xs">
+          Về danh mục sản phẩm
+        </Link>
       </div>
     );
   }
 
   if (!product) {
     return (
-      <div className="max-w-7xl mx-auto px-4 sm:px-8 py-16 text-center">
+      <div className="max-w-7xl mx-auto px-4 sm:px-8 py-20 text-center">
         <h2 className="text-2xl font-bold text-black mb-2">Sản phẩm không tồn tại</h2>
-        <p className="text-sm text-[#595959] mb-6">Sản phẩm có thể đã ngừng kinh doanh hoặc đường dẫn bị thay đổi.</p>
-        <Link href="/products" className="btn-pill-dark">
+        <p className="text-sm text-[#595959] mb-6">
+          Sản phẩm có thể đã ngừng kinh doanh hoặc đường dẫn đã thay đổi.
+        </p>
+        <Link href="/products" className="btn-pill-dark px-6 py-2.5 text-xs">
           Quay lại danh mục sản phẩm
         </Link>
       </div>
@@ -133,10 +192,15 @@ export default function ProductDetailPage({
   }
 
   const selectedVariant = product.variants.find((v) => v.id === selectedVariantId);
-  const currentPrice = selectedVariant ? selectedVariant.price : (product.salePrice ?? product.regularPrice);
-  const currentStock = selectedVariant ? selectedVariant.stock : product.stock;
+  const currentPrice = Number(
+    selectedVariant ? selectedVariant.price : (product.salePrice ?? product.regularPrice)
+  );
+  const currentStock = Number(selectedVariant ? selectedVariant.stock : product.stock);
   const currentSku = selectedVariant ? selectedVariant.sku : product.sku;
-  const discount = calculateDiscount(product.regularPrice, currentPrice);
+  const regularPrice = Number(product.regularPrice || 0);
+  const discount = calculateDiscount(regularPrice, currentPrice);
+  const ratingsAvgNum = Number(product.ratingsAvg || 0);
+  const ratingsCountNum = Number(product.ratingsCount || product.reviews?.length || 0);
 
   const handleAddToCart = () => {
     if (quantity > currentStock) {
@@ -187,7 +251,6 @@ export default function ProductDetailPage({
       if (res.ok) {
         success("Cảm ơn bạn đã gửi đánh giá sản phẩm!");
         setReviewComment("");
-        // Append to current product reviews
         setProduct((prev) =>
           prev
             ? {
@@ -215,19 +278,36 @@ export default function ProductDetailPage({
     }
   };
 
+  // Group specs by groupName
+  const groupedSpecs = (product.specifications || []).reduce((acc, spec) => {
+    const group = spec.groupName || "Thông Số Chung";
+    if (!acc[group]) acc[group] = [];
+    acc[group].push(spec);
+    return acc;
+  }, {} as Record<string, NonNullable<typeof product.specifications>>);
+
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-8 py-8 space-y-12">
       {/* Breadcrumbs */}
       <nav className="flex items-center gap-2 text-xs text-[#595959]">
-        <Link href="/" className="hover:text-black">Trang Chủ</Link>
-        <span>/</span>
-        <Link href="/products" className="hover:text-black">Sản Phẩm</Link>
-        <span>/</span>
-        <Link href={`/products?category=${product.category.slug}`} className="hover:text-black">
-          {product.category.name}
+        <Link href="/" className="hover:text-black">
+          Trang Chủ
         </Link>
         <span>/</span>
-        <span className="text-black font-semibold truncate max-w-[200px]">{product.title}</span>
+        <Link href="/products" className="hover:text-black">
+          Sản Phẩm
+        </Link>
+        <span>/</span>
+        <Link
+          href={`/products?category=${product.category?.slug || ""}`}
+          className="hover:text-black"
+        >
+          {product.category?.name || "Công Nghệ"}
+        </Link>
+        <span>/</span>
+        <span className="text-black font-semibold truncate max-w-[200px]">
+          {product.title}
+        </span>
       </nav>
 
       {/* Main Product Showcase: Gallery + Details */}
@@ -235,7 +315,7 @@ export default function ProductDetailPage({
         {/* Left: Gallery Column */}
         <div className="lg:col-span-6 space-y-4">
           <div className="relative aspect-square w-full bg-[#f8f8f8] border border-[#d8d8d8] rounded-[10px] overflow-hidden">
-            {selectedImage && (
+            {selectedImage ? (
               <Image
                 src={selectedImage}
                 alt={product.title}
@@ -244,6 +324,10 @@ export default function ProductDetailPage({
                 className="object-cover"
                 sizes="(max-width: 1024px) 100vw, 50vw"
               />
+            ) : (
+              <div className="w-full h-full flex items-center justify-center text-xs text-[#595959]">
+                Hình ảnh đang cập nhật
+              </div>
             )}
             {product.isFlashSale && (
               <span className="absolute top-4 left-4 bg-[#c31833] text-white text-xs font-black uppercase px-3 py-1 rounded-[2px] tracking-wider flex items-center gap-1.5 shadow-xs">
@@ -254,17 +338,25 @@ export default function ProductDetailPage({
           </div>
 
           {/* Thumbnails */}
-          {product.images.length > 1 && (
+          {product.images && product.images.length > 1 && (
             <div className="flex gap-3 overflow-x-auto pb-2">
               {product.images.map((img) => (
                 <button
                   key={img.id}
                   onClick={() => setSelectedImage(img.url)}
                   className={`relative w-20 h-20 bg-[#f8f8f8] rounded-[6px] overflow-hidden shrink-0 border-2 transition-all ${
-                    selectedImage === img.url ? "border-black shadow-xs" : "border-[#d8d8d8] opacity-70 hover:opacity-100"
+                    selectedImage === img.url
+                      ? "border-black shadow-xs"
+                      : "border-[#d8d8d8] opacity-70 hover:opacity-100"
                   }`}
                 >
-                  <Image src={img.url} alt="Thumbnail" fill className="object-cover" sizes="80px" />
+                  <Image
+                    src={img.url}
+                    alt="Thumbnail"
+                    fill
+                    className="object-cover"
+                    sizes="80px"
+                  />
                 </button>
               ))}
             </div>
@@ -293,16 +385,18 @@ export default function ProductDetailPage({
                   <Star
                     key={i}
                     className={`w-4 h-4 ${
-                      i < Math.floor(product.ratingsAvg)
+                      i < Math.floor(ratingsAvgNum)
                         ? "fill-amber-500"
                         : "text-[#d8d8d8]"
                     }`}
                   />
                 ))}
               </div>
-              <span className="text-sm font-bold text-black">{product.ratingsAvg.toFixed(1)}</span>
+              <span className="text-sm font-bold text-black">
+                {ratingsAvgNum.toFixed(1)}
+              </span>
               <span className="text-xs text-[#595959]">
-                ({product.reviews.length} khách hàng đã đánh giá)
+                ({ratingsCountNum} khách hàng đã đánh giá)
               </span>
             </div>
           </div>
@@ -315,7 +409,7 @@ export default function ProductDetailPage({
             {discount > 0 && (
               <>
                 <span className="text-base text-[#595959] line-through">
-                  {formatVND(product.regularPrice)}
+                  {formatVND(regularPrice)}
                 </span>
                 <span className="bg-[#c31833] text-white text-xs font-black px-2 py-0.5 rounded-[2px]">
                   Tiết kiệm {discount}%
@@ -325,7 +419,7 @@ export default function ProductDetailPage({
           </div>
 
           {/* Variants Selector */}
-          {product.variants.length > 0 && (
+          {product.variants && product.variants.length > 0 && (
             <div className="space-y-2.5 pt-2">
               <label className="block text-xs font-bold uppercase tracking-wider text-black">
                 Chọn Phân Loại / Phiên Bản:
@@ -363,9 +457,13 @@ export default function ProductDetailPage({
               }`}
             />
             {currentStock > 10 ? (
-              <span className="text-emerald-700">Còn hàng trong kho ({currentStock} sản phẩm sẵn có)</span>
+              <span className="text-emerald-700">
+                Còn hàng trong kho ({currentStock} sản phẩm sẵn có)
+              </span>
             ) : currentStock > 0 ? (
-              <span className="text-amber-700 font-bold">Chỉ còn {currentStock} sản phẩm cuối cùng!</span>
+              <span className="text-amber-700 font-bold">
+                Chỉ còn {currentStock} sản phẩm cuối cùng!
+              </span>
             ) : (
               <span className="text-[#c31833] font-bold">Hiện đang tạm hết hàng</span>
             )}
@@ -435,41 +533,49 @@ export default function ProductDetailPage({
         </div>
       </div>
 
-      {/* Tabs: Description, Shipping, Reviews */}
+      {/* Tabs: Description, Specs, Shipping, Reviews */}
       <div className="pt-8 border-t border-[#d8d8d8]">
         {/* Tab Buttons */}
-        <div className="flex border-b border-[#d8d8d8] gap-8">
+        <div className="flex border-b border-[#d8d8d8] gap-8 overflow-x-auto">
           <button
             onClick={() => setActiveTab("desc")}
-            className={`pb-3 text-sm font-bold tracking-wider uppercase transition-colors relative ${
-              activeTab === "desc" ? "text-black border-b-2 border-black" : "text-[#595959] hover:text-black"
+            className={`pb-3 text-sm font-bold tracking-wider uppercase whitespace-nowrap transition-colors relative ${
+              activeTab === "desc"
+                ? "text-black border-b-2 border-black"
+                : "text-[#595959] hover:text-black"
             }`}
           >
             Mô Tả Chi Tiết
           </button>
           <button
             onClick={() => setActiveTab("specs")}
-            className={`pb-3 text-sm font-bold tracking-wider uppercase transition-colors relative ${
-              activeTab === "specs" ? "text-black border-b-2 border-black" : "text-[#595959] hover:text-black"
+            className={`pb-3 text-sm font-bold tracking-wider uppercase whitespace-nowrap transition-colors relative ${
+              activeTab === "specs"
+                ? "text-black border-b-2 border-black"
+                : "text-[#595959] hover:text-black"
             }`}
           >
             Thông Số Kỹ Thuật
           </button>
           <button
             onClick={() => setActiveTab("shipping")}
-            className={`pb-3 text-sm font-bold tracking-wider uppercase transition-colors relative ${
-              activeTab === "shipping" ? "text-black border-b-2 border-black" : "text-[#595959] hover:text-black"
+            className={`pb-3 text-sm font-bold tracking-wider uppercase whitespace-nowrap transition-colors relative ${
+              activeTab === "shipping"
+                ? "text-black border-b-2 border-black"
+                : "text-[#595959] hover:text-black"
             }`}
           >
             Chính Sách Vận Chuyển & Bảo Hành
           </button>
           <button
             onClick={() => setActiveTab("reviews")}
-            className={`pb-3 text-sm font-bold tracking-wider uppercase transition-colors relative ${
-              activeTab === "reviews" ? "text-black border-b-2 border-black" : "text-[#595959] hover:text-black"
+            className={`pb-3 text-sm font-bold tracking-wider uppercase whitespace-nowrap transition-colors relative ${
+              activeTab === "reviews"
+                ? "text-black border-b-2 border-black"
+                : "text-[#595959] hover:text-black"
             }`}
           >
-            Đánh Giá Của Khách Hàng ({product.reviews.length})
+            Đánh Giá Của Khách Hàng ({product.reviews?.length || 0})
           </button>
         </div>
 
@@ -486,12 +592,48 @@ export default function ProductDetailPage({
             </div>
           )}
 
+          {activeTab === "specs" && (
+            <div className="max-w-3xl space-y-6">
+              {Object.keys(groupedSpecs).length === 0 ? (
+                <p className="text-xs text-[#595959] py-4">
+                  Đang cập nhật thông số kỹ thuật chi tiết từ nhà sản xuất.
+                </p>
+              ) : (
+                Object.entries(groupedSpecs).map(([group, specs]) => (
+                  <div
+                    key={group}
+                    className="border border-[#d8d8d8] rounded-[10px] overflow-hidden"
+                  >
+                    <div className="bg-[#f8f8f8] px-4 py-2.5 font-bold text-xs uppercase tracking-wider text-black border-b border-[#d8d8d8]">
+                      {group}
+                    </div>
+                    <div className="divide-y divide-[#d8d8d8]">
+                      {specs.map((s) => (
+                        <div key={s.id} className="grid grid-cols-3 px-4 py-2.5 text-xs">
+                          <span className="font-semibold text-[#595959] col-span-1">
+                            {s.specKey}
+                          </span>
+                          <span className="font-medium text-black col-span-2">
+                            {s.specValue}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                ))
+              )}
+            </div>
+          )}
+
           {activeTab === "shipping" && (
             <div className="max-w-3xl space-y-4 text-sm leading-relaxed text-[#333333]">
               <h4 className="font-bold text-black text-base">Quy Định Vận Chuyển:</h4>
               <ul className="list-disc pl-5 space-y-2">
                 <li>Giao hàng hỏa tốc trong 2 giờ tại nội thành Hà Nội & TP. Hồ Chí Minh.</li>
-                <li>Giao hàng tiêu chuẩn toàn quốc từ 1 - 3 ngày làm việc thông qua VNPost / Viettel Post.</li>
+                <li>
+                  Giao hàng tiêu chuẩn toàn quốc từ 1 - 3 ngày làm việc thông qua VNPost /
+                  Viettel Post.
+                </li>
                 <li>Được kiểm tra hàng (đồng kiểm ngoại quan) trước khi thanh toán tiền mặt (COD).</li>
               </ul>
               <h4 className="font-bold text-black text-base pt-2">Chính Sách Đổi Trả & Bảo Hành:</h4>
@@ -553,8 +695,10 @@ export default function ProductDetailPage({
 
               {/* Reviews List */}
               <div className="space-y-4 divide-y divide-[#d8d8d8]">
-                {product.reviews.length === 0 ? (
-                  <p className="text-xs text-[#595959] py-4">Chưa có đánh giá nào cho sản phẩm này.</p>
+                {!product.reviews || product.reviews.length === 0 ? (
+                  <p className="text-xs text-[#595959] py-4">
+                    Chưa có đánh giá nào cho sản phẩm này.
+                  </p>
                 ) : (
                   product.reviews.map((rev) => (
                     <div key={rev.id} className="pt-4 first:pt-0 space-y-1.5">
@@ -565,7 +709,9 @@ export default function ProductDetailPage({
                             Đã mua hàng
                           </span>
                         </div>
-                        <span className="text-[11px] text-[#595959]">{formatDate(rev.createdAt)}</span>
+                        <span className="text-[11px] text-[#595959]">
+                          {formatDate(rev.createdAt)}
+                        </span>
                       </div>
                       <div className="flex text-amber-500">
                         {Array.from({ length: rev.rating }).map((_, i) => (
@@ -583,7 +729,7 @@ export default function ProductDetailPage({
       </div>
 
       {/* Related Products Section */}
-      {relatedProducts.length > 0 && (
+      {relatedProducts && relatedProducts.length > 0 && (
         <div className="pt-8 border-t border-[#d8d8d8]">
           <div className="section-eyebrow-lockup mb-6">
             <span className="section-eyebrow-bar" />
