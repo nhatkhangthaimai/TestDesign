@@ -1,0 +1,60 @@
+name: Auto Deploy to AWS EC2
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    name: Deploy to Production EC2
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: SSH and Deploy to AWS EC2
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          port: 22
+          script_stop: true
+          script: |
+            echo "================================================================================"
+            echo "  🚀 GITHUB ACTIONS: BẮT ĐẦU TỰ ĐỘNG CẬP NHẬT WEBSITE LÊN AWS EC2...          "
+            echo "================================================================================"
+            cd ~/TestDesign
+
+            # 1. Đảm bảo 2GB Swap Memory hoạt động để chống tràn RAM khi build
+            sudo swapon /swapfile 2>/dev/null || true
+
+            # 2. Đồng bộ mã nguồn mới nhất từ GitHub
+            echo "--> Đang kéo mã nguồn mới nhất từ nhánh main..."
+            git fetch origin main
+            git reset --hard origin/main
+
+            # 3. Cài đặt các thư viện mới nhất nếu có
+            echo "--> Cập nhật thư viện dependencies..."
+            npm install --production=false
+
+            # 4. Đồng bộ Prisma Client với schema TiDB Cloud
+            echo "--> Đồng bộ Prisma Client cho TiDB Cloud..."
+            npm run use:tidb
+
+            # 5. Biên dịch production với bộ nhớ mở rộng
+            echo "--> Biên dịch dự án Next.js (npm run build)..."
+            export NODE_OPTIONS="--max-old-space-size=2560"
+            npm run build
+
+            # 6. Khởi động lại app bằng PM2 (Zero Downtime)
+            echo "--> Khởi động lại ứng dụng PM2..."
+            pm2 restart aj-commerce || pm2 start npm --name "aj-commerce" -- start
+            pm2 save
+
+            echo "================================================================================"
+            echo "  ✅ WEBSITE ĐÃ TỰ ĐỘNG CẬP NHẬT PHIÊN BẢN MỚI NHẤT THÀNH CÔNG!                 "
+            echo "================================================================================"
