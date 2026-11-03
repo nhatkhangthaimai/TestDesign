@@ -151,3 +151,4 @@ runProductsAudit().catch((err) => {
   console.error("Audit runner error:", err);
   process.exit(1);
 });
+

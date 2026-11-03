@@ -28,9 +28,17 @@ jobs:
             echo "  🚀 GITHUB ACTIONS: BẮT ĐẦU TỰ ĐỘNG CẬP NHẬT WEBSITE LÊN AWS EC2...          "
             echo "================================================================================"
             cd ~/TestDesign
+            git config --global --add safe.directory /home/ubuntu/TestDesign 2>/dev/null || true
 
             # 1. Đảm bảo 2GB Swap Memory hoạt động để chống tràn RAM khi build
-            sudo swapon /swapfile 2>/dev/null || true
+            if [ ! -s /swapfile ]; then
+              sudo fallocate -l 2G /swapfile 2>/dev/null || sudo dd if=/dev/zero of=/swapfile bs=1M count=2048 2>/dev/null || true
+              sudo chmod 600 /swapfile 2>/dev/null || true
+              sudo mkswap /swapfile 2>/dev/null || true
+              sudo swapon /swapfile 2>/dev/null || true
+            else
+              sudo swapon /swapfile 2>/dev/null || true
+            fi
 
             # 2. Đồng bộ mã nguồn mới nhất từ GitHub
             echo "--> Đang kéo mã nguồn mới nhất từ nhánh main..."
