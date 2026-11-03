@@ -14,7 +14,7 @@ export async function GET() {
 
 export async function PUT(req: Request) {
   try {
-    const user = await getCurrentUser();
+    const user = await getCurrentUser(req);
     if (!user || user.role !== "ROLE_ADMIN") {
       return NextResponse.json({ error: "Không có quyền quản trị" }, { status: 403 });
     }

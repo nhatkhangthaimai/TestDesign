@@ -1,0 +1,505 @@
+{
+  "summary": {
+    "total": 55,
+    "passed": 55,
+    "failed": 0,
+    "passRate": "100.0"
+  },
+  "results": [
+    {
+      "name": "Health Check",
+      "domain": "Health",
+      "method": "GET",
+      "endpoint": "/api/health",
+      "status": "PASS",
+      "httpStatus": 200,
+      "durationMs": 514
+    },
+    {
+      "name": "Register New Account",
+      "domain": "Auth",
+      "method": "POST",
+      "endpoint": "/api/auth/register",
+      "status": "PASS",
+      "httpStatus": 200,
+      "durationMs": 443
+    },
+    {
+      "name": "Login User Account",
+      "domain": "Auth",
+      "method": "POST",
+      "endpoint": "/api/auth/login",
+      "status": "PASS",
+      "httpStatus": 200,
+      "durationMs": 238
+    },
+    {
+      "name": "Login Admin Account",
+      "domain": "Auth",
+      "method": "POST",
+      "endpoint": "/api/auth/login",
+      "status": "PASS",
+      "httpStatus": 401,
+      "durationMs": 60
+    },
+    {
+      "name": "Login Admin with Master Password",
+      "domain": "Auth",
+      "method": "POST",
+      "endpoint": "/api/auth/login",
+      "status": "PASS",
+      "httpStatus": 401,
+      "durationMs": 64
+    },
+    {
+      "name": "Get Current User Profile (/me)",
+      "domain": "Auth",
+      "method": "GET",
+      "endpoint": "/api/auth/me",
+      "status": "PASS",
+      "httpStatus": 200,
+      "durationMs": 70
+    },
+    {
+      "name": "Get Detailed Profile",
+      "domain": "Auth",
+      "method": "GET",
+      "endpoint": "/api/auth/profile",
+      "status": "PASS",
+      "httpStatus": 200,
+      "durationMs": 241
+    },
+    {
+      "name": "Update User Profile",
+      "domain": "Auth",
+      "method": "PUT",
+      "endpoint": "/api/auth/profile",
+      "status": "PASS",
+      "httpStatus": 200,
+      "durationMs": 391
+    },
+    {
+      "name": "Forgot Password Request",
+      "domain": "Auth",
+      "method": "POST",
+      "endpoint": "/api/auth/forgot-password",
+      "status": "PASS",
+      "httpStatus": 200,
+      "durationMs": 114
+    },
+    {
+      "name": "Reset Password with Token",
+      "domain": "Auth",
+      "method": "POST",
+      "endpoint": "/api/auth/reset-password",
+      "status": "PASS",
+      "httpStatus": 200,
+      "durationMs": 670
+    },
+    {
+      "name": "Login with New Password",
+      "domain": "Auth",
+      "method": "POST",
+      "endpoint": "/api/auth/login",
+      "status": "PASS",
+      "httpStatus": 200,
+      "durationMs": 173
+    },
+    {
+      "name": "RBAC: Regular User Blocked from Admin Dashboard",
+      "domain": "Auth",
+      "method": "GET",
+      "endpoint": "/api/admin/dashboard",
+      "status": "PASS",
+      "httpStatus": 403,
+      "durationMs": 69
+    },
+    {
+      "name": "RBAC: Unauthenticated Blocked from Admin Dashboard",
+      "domain": "Auth",
+      "method": "GET",
+      "endpoint": "/api/admin/dashboard",
+      "status": "PASS",
+      "httpStatus": 403,
+      "durationMs": 39
+    },
+    {
+      "name": "Get Product List (Default)",
+      "domain": "Products",
+      "method": "GET",
+      "endpoint": "/api/products",
+      "status": "PASS",
+      "httpStatus": 200,
+      "durationMs": 540
+    },
+    {
+      "name": "Filter Products by Brand (Apple)",
+      "domain": "Products",
+      "method": "GET",
+      "endpoint": "/api/products?brand=apple",
+      "status": "PASS",
+      "httpStatus": 200,
+      "durationMs": 400
+    },
+    {
+      "name": "Filter Products by Category (dien-thoai-cong-nghe)",
+      "domain": "Products",
+      "method": "GET",
+      "endpoint": "/api/products?category=dien-thoai-cong-nghe",
+      "status": "PASS",
+      "httpStatus": 200,
+      "durationMs": 680
+    },
+    {
+      "name": "Sort Products by Price Ascending",
+      "domain": "Products",
+      "method": "GET",
+      "endpoint": "/api/products?sort=price_asc&limit=5",
+      "status": "PASS",
+      "httpStatus": 200,
+      "durationMs": 420
+    },
+    {
+      "name": "Search Products (query: 'iPhone')",
+      "domain": "Products",
+      "method": "GET",
+      "endpoint": "/api/products?search=iPhone",
+      "status": "PASS",
+      "httpStatus": 200,
+      "durationMs": 351
+    },
+    {
+      "name": "Get Single Product Detail (/products/ban-phim-keychron-q3-max-tkl)",
+      "domain": "Products",
+      "method": "GET",
+      "endpoint": "/api/products/ban-phim-keychron-q3-max-tkl",
+      "status": "PASS",
+      "httpStatus": 200,
+      "durationMs": 1047
+    },
+    {
+      "name": "Get Non-existent Product Detail",
+      "domain": "Products",
+      "method": "GET",
+      "endpoint": "/api/products/non-existent-slug-xyz",
+      "status": "PASS",
+      "httpStatus": 404,
+      "durationMs": 69
+    },
+    {
+      "name": "Get Public Category Taxonomy",
+      "domain": "Categories",
+      "method": "GET",
+      "endpoint": "/api/categories",
+      "status": "PASS",
+      "httpStatus": 200,
+      "durationMs": 54
+    },
+    {
+      "name": "Get Single Category Detail (/categories/dien-thoai-cong-nghe)",
+      "domain": "Categories",
+      "method": "GET",
+      "endpoint": "/api/categories/dien-thoai-cong-nghe",
+      "status": "PASS",
+      "httpStatus": 200,
+      "durationMs": 103
+    },
+    {
+      "name": "Get Public Brand List",
+      "domain": "Brands",
+      "method": "GET",
+      "endpoint": "/api/brands",
+      "status": "PASS",
+      "httpStatus": 200,
+      "durationMs": 59
+    },
+    {
+      "name": "Get Single Brand Detail (/brands/apple)",
+      "domain": "Brands",
+      "method": "GET",
+      "endpoint": "/api/brands/apple",
+      "status": "PASS",
+      "httpStatus": 200,
+      "durationMs": 63
+    },
+    {
+      "name": "Get User Cart (Initial)",
+      "domain": "Cart",
+      "method": "GET",
+      "endpoint": "/api/cart",
+      "status": "PASS",
+      "httpStatus": 200,
+      "durationMs": 309
+    },
+    {
+      "name": "Add Item to Cart",
+      "domain": "Cart",
+      "method": "POST",
+      "endpoint": "/api/cart",
+      "status": "PASS",
+      "httpStatus": 200,
+      "durationMs": 556
+    },
+    {
+      "name": "Update Cart Item Quantity",
+      "domain": "Cart",
+      "method": "PATCH",
+      "endpoint": "/api/cart",
+      "status": "PASS",
+      "httpStatus": 200,
+      "durationMs": 899
+    },
+    {
+      "name": "Sync Guest Cart with Database",
+      "domain": "Cart",
+      "method": "POST",
+      "endpoint": "/api/cart/sync",
+      "status": "PASS",
+      "httpStatus": 200,
+      "durationMs": 551
+    },
+    {
+      "name": "Clear User Cart",
+      "domain": "Cart",
+      "method": "DELETE",
+      "endpoint": "/api/cart?clearAll=true",
+      "status": "PASS",
+      "httpStatus": 200,
+      "durationMs": 350
+    },
+    {
+      "name": "Apply Valid Promo Coupon (WELCOME10)",
+      "domain": "Coupons",
+      "method": "POST",
+      "endpoint": "/api/coupons/apply",
+      "status": "PASS",
+      "httpStatus": 200,
+      "durationMs": 55
+    },
+    {
+      "name": "Apply Invalid Promo Coupon (FAKEMARKET)",
+      "domain": "Coupons",
+      "method": "POST",
+      "endpoint": "/api/coupons/apply",
+      "status": "PASS",
+      "httpStatus": 400,
+      "durationMs": 48
+    },
+    {
+      "name": "Create New Order (COD)",
+      "domain": "Orders",
+      "method": "POST",
+      "endpoint": "/api/orders",
+      "status": "PASS",
+      "httpStatus": 200,
+      "durationMs": 1179
+    },
+    {
+      "name": "Get Customer Orders List",
+      "domain": "Orders",
+      "method": "GET",
+      "endpoint": "/api/orders",
+      "status": "PASS",
+      "httpStatus": 200,
+      "durationMs": 269
+    },
+    {
+      "name": "Get Single Order Detail (/orders/682746f6-d3c6-42d3-9a44-1839c145c69f)",
+      "domain": "Orders",
+      "method": "GET",
+      "endpoint": "/api/orders/682746f6-d3c6-42d3-9a44-1839c145c69f",
+      "status": "PASS",
+      "httpStatus": 200,
+      "durationMs": 316
+    },
+    {
+      "name": "Initialize Payment Gateway",
+      "domain": "Payments",
+      "method": "POST",
+      "endpoint": "/api/payments",
+      "status": "PASS",
+      "httpStatus": 200,
+      "durationMs": 591
+    },
+    {
+      "name": "Check Payment Status (/payments/682746f6-d3c6-42d3-9a44-1839c145c69f/status)",
+      "domain": "Payments",
+      "method": "GET",
+      "endpoint": "/api/payments/682746f6-d3c6-42d3-9a44-1839c145c69f/status",
+      "status": "PASS",
+      "httpStatus": 200,
+      "durationMs": 163
+    },
+    {
+      "name": "Process Payment Gateway Webhook (SUCCESS)",
+      "domain": "Payments",
+      "method": "POST",
+      "endpoint": "/api/payments/webhook",
+      "status": "PASS",
+      "httpStatus": 200,
+      "durationMs": 862
+    },
+    {
+      "name": "Payment Webhook Idempotency Check (Duplicate Event)",
+      "domain": "Payments",
+      "method": "POST",
+      "endpoint": "/api/payments/webhook",
+      "status": "PASS",
+      "httpStatus": 200,
+      "durationMs": 173
+    },
+    {
+      "name": "Get Product Reviews (/reviews?productId=5084f4e1-55bd-4a4e-b637-56b56f94c52c)",
+      "domain": "Reviews",
+      "method": "GET",
+      "endpoint": "/api/reviews?productId=5084f4e1-55bd-4a4e-b637-56b56f94c52c",
+      "status": "PASS",
+      "httpStatus": 200,
+      "durationMs": 192
+    },
+    {
+      "name": "Submit Product Review",
+      "domain": "Reviews",
+      "method": "POST",
+      "endpoint": "/api/reviews",
+      "status": "PASS",
+      "httpStatus": 200,
+      "durationMs": 1071
+    },
+    {
+      "name": "Delete Product Review (/reviews?id=b5ae1505-1e10-4531-8320-2aa6c5ce59b7)",
+      "domain": "Reviews",
+      "method": "DELETE",
+      "endpoint": "/api/reviews?id=b5ae1505-1e10-4531-8320-2aa6c5ce59b7",
+      "status": "PASS",
+      "httpStatus": 200,
+      "durationMs": 574
+    },
+    {
+      "name": "Add Product to Wishlist (Toggle ON)",
+      "domain": "Wishlist",
+      "method": "POST",
+      "endpoint": "/api/wishlist",
+      "status": "PASS",
+      "httpStatus": 200,
+      "durationMs": 432
+    },
+    {
+      "name": "Get Customer Wishlist",
+      "domain": "Wishlist",
+      "method": "GET",
+      "endpoint": "/api/wishlist",
+      "status": "PASS",
+      "httpStatus": 200,
+      "durationMs": 393
+    },
+    {
+      "name": "Remove Product from Wishlist (Toggle OFF)",
+      "domain": "Wishlist",
+      "method": "POST",
+      "endpoint": "/api/wishlist",
+      "status": "PASS",
+      "httpStatus": 200,
+      "durationMs": 356
+    },
+    {
+      "name": "Get Active Promotional Banners",
+      "domain": "Banners",
+      "method": "GET",
+      "endpoint": "/api/banners",
+      "status": "PASS",
+      "httpStatus": 200,
+      "durationMs": 255
+    },
+    {
+      "name": "Admin: Dashboard Metrics",
+      "domain": "Admin",
+      "method": "GET",
+      "endpoint": "/api/admin/dashboard",
+      "status": "PASS",
+      "httpStatus": 200,
+      "durationMs": 888
+    },
+    {
+      "name": "Admin: Customer Directory",
+      "domain": "Admin",
+      "method": "GET",
+      "endpoint": "/api/admin/customers",
+      "status": "PASS",
+      "httpStatus": 200,
+      "durationMs": 205
+    },
+    {
+      "name": "Admin: Order Management List",
+      "domain": "Admin",
+      "method": "GET",
+      "endpoint": "/api/admin/orders",
+      "status": "PASS",
+      "httpStatus": 200,
+      "durationMs": 397
+    },
+    {
+      "name": "Admin: Export Orders to CSV",
+      "domain": "Admin",
+      "method": "GET",
+      "endpoint": "/api/admin/orders/export",
+      "status": "PASS",
+      "httpStatus": 200,
+      "durationMs": 91
+    },
+    {
+      "name": "Admin: Warehouse Inventory Management",
+      "domain": "Admin",
+      "method": "GET",
+      "endpoint": "/api/admin/inventory",
+      "status": "PASS",
+      "httpStatus": 200,
+      "durationMs": 291
+    },
+    {
+      "name": "Admin: Categories Management",
+      "domain": "Admin",
+      "method": "GET",
+      "endpoint": "/api/admin/categories",
+      "status": "PASS",
+      "httpStatus": 200,
+      "durationMs": 151
+    },
+    {
+      "name": "Admin: Brands Management",
+      "domain": "Admin",
+      "method": "GET",
+      "endpoint": "/api/admin/brands",
+      "status": "PASS",
+      "httpStatus": 200,
+      "durationMs": 130
+    },
+    {
+      "name": "Admin: Coupons Management",
+      "domain": "Admin",
+      "method": "GET",
+      "endpoint": "/api/admin/coupons",
+      "status": "PASS",
+      "httpStatus": 200,
+      "durationMs": 150
+    },
+    {
+      "name": "Admin: Store Settings",
+      "domain": "Admin",
+      "method": "GET",
+      "endpoint": "/api/admin/settings",
+      "status": "PASS",
+      "httpStatus": 200,
+      "durationMs": 85
+    },
+    {
+      "name": "Admin: Database Storage & Health Telemetry",
+      "domain": "Admin",
+      "method": "GET",
+      "endpoint": "/api/admin/database",
+      "status": "PASS",
+      "httpStatus": 200,
+      "durationMs": 8531
+    }
+  ]
+}

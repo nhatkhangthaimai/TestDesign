@@ -19,6 +19,9 @@ else
   sudo swapon /swapfile 2>/dev/null || true
 fi
 
+# Tự động ghi nhớ NODE_OPTIONS vào ~/.bashrc để không bao giờ bị tràn bộ nhớ V8
+grep -q "NODE_OPTIONS" ~/.bashrc || echo 'export NODE_OPTIONS="--max-old-space-size=2560"' >> ~/.bashrc
+
 # 2. Cài đặt các gói phụ trợ: Node.js 20 LTS, Nginx, Git, PM2
 echo "--> Kiểm tra và cài đặt Node.js 20 LTS & PM2..."
 if ! command -v node &> /dev/null; then

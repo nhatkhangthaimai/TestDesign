@@ -15,9 +15,9 @@ const couponCreateSchema = z.object({
   isActive: z.boolean().default(true),
 });
 
-export async function GET() {
+export async function GET(req: Request) {
   try {
-    const user = await getCurrentUser();
+    const user = await getCurrentUser(req);
     if (!user || user.role !== "ROLE_ADMIN") {
       return NextResponse.json({ error: "Không có quyền quản trị" }, { status: 403 });
     }
@@ -40,7 +40,7 @@ export async function GET() {
 
 export async function POST(req: Request) {
   try {
-    const user = await getCurrentUser();
+    const user = await getCurrentUser(req);
     if (!user || user.role !== "ROLE_ADMIN") {
       return NextResponse.json({ error: "Không có quyền quản trị" }, { status: 403 });
     }

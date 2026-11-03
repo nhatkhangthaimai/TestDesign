@@ -50,7 +50,7 @@ export async function POST(req: Request) {
       items,
     } = result.data;
 
-    const currentUser = await getCurrentUser();
+    const currentUser = await getCurrentUser(req);
 
     // 1. Fetch products & variants from DB to verify stock and price (NEVER TRUST CLIENT)
     const productIds = items.map((i) => i.productId);
@@ -272,9 +272,9 @@ export async function POST(req: Request) {
   }
 }
 
-export async function GET() {
+export async function GET(req: Request) {
   try {
-    const user = await getCurrentUser();
+    const user = await getCurrentUser(req);
     if (!user) {
       return NextResponse.json({ error: "Vui lòng đăng nhập" }, { status: 401 });
     }

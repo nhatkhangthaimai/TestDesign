@@ -63,6 +63,7 @@ export async function POST(req: Request) {
       success: true,
       message: "Đăng ký tài khoản thành công",
       user,
+      token,
     });
     response.headers.set("Set-Cookie", setAuthCookieHeader(token));
     return response;

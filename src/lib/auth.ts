@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import { cookies } from "next/headers";
+import { cookies, headers } from "next/headers";
 import { prisma } from "./prisma";
 
 const JWT_SECRET = process.env.JWT_SECRET || "fallback_super_secret_key_2026";
@@ -23,10 +23,37 @@ export function verifyToken(token: string): TokenPayload | null {
   }
 }
 
-export async function getCurrentUser() {
+export async function getCurrentUser(req?: Request) {
   try {
-    const cookieStore = await cookies();
-    const token = cookieStore.get(COOKIE_NAME)?.value;
+    let token: string | undefined;
+
+    // 1. Check req header if passed directly
+    if (req) {
+      const auth = req.headers.get("authorization");
+      if (auth?.startsWith("Bearer ")) {
+        token = auth.slice(7).trim();
+      }
+    }
+
+    // 2. Check cookies
+    if (!token) {
+      try {
+        const cookieStore = await cookies();
+        token = cookieStore.get(COOKIE_NAME)?.value;
+      } catch {}
+    }
+
+    // 3. Check next/headers if still not found
+    if (!token) {
+      try {
+        const headerList = await headers();
+        const auth = headerList.get("authorization");
+        if (auth?.startsWith("Bearer ")) {
+          token = auth.slice(7).trim();
+        }
+      } catch {}
+    }
+
     if (!token) return null;
 
     const payload = verifyToken(token);
