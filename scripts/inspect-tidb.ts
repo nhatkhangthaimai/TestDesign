@@ -74,6 +74,10 @@ async function main() {
       "banners",
       "store_settings",
       "inventories",
+      "audit_logs",
+      "product_view_events",
+      "search_events",
+      "inventory_transactions",
     ];
 
     for (const tbl of countQueries) {
