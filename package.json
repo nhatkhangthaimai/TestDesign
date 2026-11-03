@@ -10,7 +10,8 @@
     "seed": "tsx prisma/seed.ts",
     "use:local": "tsx scripts/switch-db.ts local",
     "use:tidb": "tsx scripts/switch-db.ts tidb",
-    "inspect:tidb": "tsx scripts/inspect-tidb.ts"
+    "inspect:tidb": "tsx scripts/inspect-tidb.ts",
+    "seed:massive": "tsx scripts/data/seed-massive-catalog.ts"
   },
   "prisma": {
     "seed": "tsx prisma/seed.ts"
