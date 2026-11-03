@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@source "..";
 
 @theme {
   --font-sans: var(--font-roboto), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
