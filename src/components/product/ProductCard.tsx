@@ -167,7 +167,9 @@ export default function ProductCard({
             <div className="flex items-center text-amber-500">
               <Star className="w-3.5 h-3.5 fill-amber-500" />
             </div>
-            <span className="text-xs font-bold text-black">{ratingsAvg.toFixed(1)}</span>
+            <span className="text-xs font-bold text-black">{Number.isFinite(Number(ratingsAvg))
+  ? Number(ratingsAvg).toFixed(1)
+  : "0.0"}</span>
             <span className="text-xs text-[#595959]">({ratingsCount})</span>
           </div>
         </div>
