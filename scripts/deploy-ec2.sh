@@ -15,7 +15,8 @@ if [ ! -f /swapfile ]; then
   echo '/swapfile none swap sw 0 0' | sudo tee -a /etc/fstab
   echo "✓ Đã kích hoạt 2GB Swap thành công!"
 else
-  echo "✓ Swap đã tồn tại, bỏ qua tạo mới."
+  echo "✓ Swap đã tồn tại, đảm bảo swap đang bật..."
+  sudo swapon /swapfile 2>/dev/null || true
 fi
 
 # 2. Cài đặt các gói phụ trợ: Node.js 20 LTS, Nginx, Git, PM2
@@ -51,6 +52,7 @@ echo "--> Đang đồng bộ Prisma Client với schema TiDB Cloud..."
 npm run use:tidb
 
 echo "--> Đang thực hiện build tối ưu hóa sản phẩm (npm run build)..."
+export NODE_OPTIONS="--max-old-space-size=2560"
 npm run build
 
 # 5. Khởi chạy ứng dụng qua PM2 (tự khởi động khi reboot máy chủ)
