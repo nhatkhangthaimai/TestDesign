@@ -1236,7 +1236,7 @@ export async function run() {
     const img = await prisma.productImage.findFirst({ where: { productId: pId, isPrimary: true } });
     if (!img) {
       await prisma.productImage.create({
-        data: { productId: pId, imageUrl: item.imageUrl, isPrimary: true, sortOrder: 0 }
+        data: { productId: pId, url: item.imageUrl, isPrimary: true, sortOrder: 0 }
       });
     }
 
