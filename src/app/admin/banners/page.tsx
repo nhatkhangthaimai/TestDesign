@@ -31,6 +31,14 @@ import {
 } from "lucide-react";
 import { useToast } from "@/context/ToastContext";
 
+function getYouTubeVideoId(url: string | null | undefined): string | null {
+  if (!url) return null;
+  const match = url.match(
+    /(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=|shorts\/))([\w-]{11})/
+  );
+  return match ? match[1] : null;
+}
+
 interface Banner {
   id: string;
   title: string;
@@ -633,21 +641,35 @@ export default function AdminBannersPage() {
                 <div className="p-4 bg-[#202020] border border-[#333] rounded-[8px] space-y-4">
                   <div className="flex items-center justify-between">
                     <span className="text-xs font-bold text-[#fa9000] uppercase tracking-wider flex items-center gap-1.5">
-                      <Video className="w-4 h-4" /> CẤU HÌNH VIDEO 1080P
+                      <Video className="w-4 h-4" /> CẤU HÌNH VIDEO 1080P / YOUTUBE
                     </span>
-                    <span className="text-[11px] text-[#bebebe]">MP4 / H.264 • Tự động chạy ngầm, không tiếng</span>
+                    <span className="text-[11px] text-[#bebebe]">MP4, WebM hoặc YouTube Link • Tự động chạy ngầm, không tiếng</span>
                   </div>
 
                   <div>
                     <label className="block text-xs text-[#bebebe] mb-1">
-                      Đường Dẫn Video (1080p MP4 URL) *
+                      Đường Dẫn Video (1080p MP4 URL hoặc YouTube Link) *
                     </label>
                     <div className="flex gap-2">
                       <input
                         type="text"
                         value={formData.videoUrl}
-                        onChange={(e) => setFormData({ ...formData, videoUrl: e.target.value })}
-                        placeholder="https://.../video.mp4 hoặc tải file lên"
+                        onChange={(e) => {
+                          const val = e.target.value;
+                          const yt = getYouTubeVideoId(val);
+                          setFormData((prev) => ({
+                            ...prev,
+                            videoUrl: val,
+                            // If poster is empty or standard unsplash, auto-suggest YouTube HD thumbnail
+                            posterUrl: yt && (!prev.posterUrl || prev.posterUrl.includes("unsplash"))
+                              ? `https://img.youtube.com/vi/${yt}/maxresdefault.jpg`
+                              : prev.posterUrl,
+                            imageUrl: yt && (!prev.imageUrl || prev.imageUrl.includes("unsplash"))
+                              ? `https://img.youtube.com/vi/${yt}/maxresdefault.jpg`
+                              : prev.imageUrl,
+                          }));
+                        }}
+                        placeholder="https://.../video.mp4 hoặc https://www.youtube.com/watch?v=..."
                         className="flex-1 bg-[#141414] border border-[#333] rounded-[6px] px-3 py-2 text-xs text-white focus:outline-none focus:border-[#fa9000]"
                       />
                       <input
@@ -670,6 +692,14 @@ export default function AdminBannersPage() {
                         <span>{uploadingMedia ? "Đang tải..." : "Tải Video Lên"}</span>
                       </button>
                     </div>
+                    {getYouTubeVideoId(formData.videoUrl) && (
+                      <div className="mt-1.5 flex items-center gap-2 text-[11px] text-[#00cbca]">
+                        <CheckCircle2 className="w-3.5 h-3.5 shrink-0" />
+                        <span>
+                          Đã nhận diện YouTube Video ID: <strong>{getYouTubeVideoId(formData.videoUrl)}</strong> (Sẽ phát tự động chế độ nền Cinematic Loop)
+                        </span>
+                      </div>
+                    )}
                   </div>
 
                   {/* Preset Video Samples */}
@@ -958,17 +988,29 @@ export default function AdminBannersPage() {
                 </span>
                 <div className="relative w-full aspect-21/9 rounded-[8px] overflow-hidden bg-black border border-[#444] flex items-center">
                   {formData.mediaType === "VIDEO" && formData.videoUrl ? (
-                    <video
-                      key={formData.videoUrl}
-                      className="absolute inset-0 w-full h-full object-cover"
-                      autoPlay
-                      muted
-                      loop
-                      playsInline
-                      poster={formData.posterUrl || formData.imageUrl}
-                    >
-                      <source src={formData.videoUrl} type="video/mp4" />
-                    </video>
+                    getYouTubeVideoId(formData.videoUrl) ? (
+                      <div className="absolute inset-0 w-full h-full overflow-hidden pointer-events-none">
+                        <iframe
+                          key={`preview-yt-${getYouTubeVideoId(formData.videoUrl)}`}
+                          className="w-full h-full border-0 pointer-events-none scale-105"
+                          src={`https://www.youtube-nocookie.com/embed/${getYouTubeVideoId(formData.videoUrl)}?autoplay=1&mute=1&controls=0&loop=1&playlist=${getYouTubeVideoId(formData.videoUrl)}&playsinline=1&rel=0&showinfo=0`}
+                          title="YouTube Live Preview"
+                          allow="autoplay; encrypted-media"
+                        />
+                      </div>
+                    ) : (
+                      <video
+                        key={formData.videoUrl}
+                        className="absolute inset-0 w-full h-full object-cover"
+                        autoPlay
+                        muted
+                        loop
+                        playsInline
+                        poster={formData.posterUrl || formData.imageUrl}
+                      >
+                        <source src={formData.videoUrl} type="video/mp4" />
+                      </video>
+                    )
                   ) : (
                     <Image
                       src={formData.imageUrl || "https://images.unsplash.com/photo-1695048133142-1a20484d2569"}

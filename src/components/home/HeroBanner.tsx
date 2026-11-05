@@ -40,6 +40,14 @@ export interface BannerItem {
   durationSeconds?: number | null;
 }
 
+export function getYouTubeVideoId(url: string | null | undefined): string | null {
+  if (!url) return null;
+  const match = url.match(
+    /(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=|shorts\/))([\w-]{11})/
+  );
+  return match ? match[1] : null;
+}
+
 interface HeroBannerProps {
   initialBanners?: BannerItem[];
 }
@@ -153,7 +161,14 @@ export default function HeroBanner({ initialBanners = [] }: HeroBannerProps) {
     );
   }
 
-  const isVideo = currentBanner.mediaType === "VIDEO" && currentBanner.videoUrl && !videoError[currentBanner.id];
+  const youtubeId = currentBanner?.videoUrl ? getYouTubeVideoId(currentBanner.videoUrl) : null;
+  const isYouTube = currentBanner?.mediaType === "VIDEO" && !!youtubeId;
+  const isHtml5Video =
+    currentBanner?.mediaType === "VIDEO" &&
+    currentBanner.videoUrl &&
+    !youtubeId &&
+    !videoError[currentBanner.id];
+  const isVideo = isYouTube || isHtml5Video;
   const overlayOpacity = currentBanner.overlayOpacity ?? 0.45;
   const overlayColor = currentBanner.overlayColor || "#000000";
   const textColor = currentBanner.textColor || "#ffffff";
@@ -166,16 +181,33 @@ export default function HeroBanner({ initialBanners = [] }: HeroBannerProps) {
 
   return (
     <section className="relative w-full bg-[#100e2f] overflow-hidden group select-none">
-      {/* 1. HERO MEDIA CONTAINER (VIDEO OR IMAGE) */}
+      {/* 1. HERO MEDIA CONTAINER (YOUTUBE, HTML5 VIDEO OR IMAGE) */}
       <div className="relative w-full min-h-[460px] sm:min-h-[520px] md:min-h-[580px] lg:min-h-[640px] flex items-center">
-        {/* VIDEO BACKGROUND (1080P FULL HD) */}
-        {isVideo ? (
+        {/* VIDEO BACKGROUND (YOUTUBE EMBED) */}
+        {isYouTube ? (
+          <div className="absolute inset-0 w-full h-full overflow-hidden pointer-events-none">
+            <iframe
+              key={`yt-${currentBanner.id}-${youtubeId}`}
+              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none border-0 select-none"
+              style={{
+                width: "max(130vw, 220%)",
+                height: "max(73vw, 130%)",
+                minWidth: "100%",
+                minHeight: "100%",
+              }}
+              src={`https://www.youtube-nocookie.com/embed/${youtubeId}?autoplay=1&mute=1&controls=0&loop=1&playlist=${youtubeId}&playsinline=1&rel=0&showinfo=0&iv_load_policy=3&disablekb=1&modestbranding=1&enablejsapi=1`}
+              title={currentBanner.title}
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            />
+          </div>
+        ) : isHtml5Video ? (
+          /* VIDEO BACKGROUND (1080P MP4/WEBM) */
           <div className="absolute inset-0 w-full h-full overflow-hidden">
             <video
               ref={(el) => {
                 videoRefs.current[currentBanner.id] = el;
               }}
-              key={currentBanner.id}
+              key={`mp4-${currentBanner.id}`}
               className="w-full h-full object-cover object-center transition-opacity duration-1000 scale-100 group-hover:scale-105 transition-transform duration-7000 ease-out"
               autoPlay
               muted
@@ -198,7 +230,11 @@ export default function HeroBanner({ initialBanners = [] }: HeroBannerProps) {
           /* IMAGE BACKGROUND (HIGH RESOLUTION) */
           <div className="absolute inset-0 w-full h-full overflow-hidden">
             <Image
-              src={currentBanner.imageUrl}
+              src={
+                currentBanner.imageUrl ||
+                (youtubeId ? `https://img.youtube.com/vi/${youtubeId}/maxresdefault.jpg` : "") ||
+                "https://images.unsplash.com/photo-1695048133142-1a20484d2569?auto=format&fit=crop&w=1920&q=85"
+              }
               alt={currentBanner.title}
               fill
               priority
