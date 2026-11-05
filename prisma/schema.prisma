@@ -456,17 +456,31 @@ model Wishlist {
 }
 
 model Banner {
-  id        String   @id @default(uuid())
-  title     String
-  subtitle  String?
-  imageUrl  String
-  linkUrl   String?  @default("/products")
-  badgeText String?
-  position  String   @default("HERO") // HERO, SIDEBAR, FLASH_SALE
-  isActive  Boolean  @default(true)
-  sortOrder Int      @default(0)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id              String    @id @default(uuid())
+  title           String
+  subtitle        String?
+  description     String?
+  imageUrl        String
+  videoUrl        String?
+  videoMobileUrl  String?
+  posterUrl       String?
+  mediaType       String    @default("IMAGE") // IMAGE, VIDEO
+  linkUrl         String?   @default("/products")
+  badgeText       String?
+  ctaText         String?   @default("Khám Phá Ngay")
+  textColor       String?   @default("#ffffff")
+  overlayColor    String?   @default("#000000")
+  overlayOpacity  Float?    @default(0.4)
+  contentPosition String?   @default("LEFT") // LEFT, CENTER, RIGHT
+  targetDevice    String?   @default("ALL")  // ALL, DESKTOP, MOBILE
+  position        String    @default("HERO") // HERO, SIDEBAR, FLASH_SALE
+  isActive        Boolean   @default(true)
+  sortOrder       Int       @default(0)
+  durationSeconds Int?      @default(8)
+  startDate       DateTime?
+  endDate         DateTime?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
 
   @@map("banners")
 }

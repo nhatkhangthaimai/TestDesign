@@ -15,6 +15,7 @@ import {
   Sparkles,
 } from "lucide-react";
 import ProductCard from "@/components/product/ProductCard";
+import HeroBanner from "@/components/home/HeroBanner";
 import { useToast } from "@/context/ToastContext";
 
 interface Product {
@@ -119,89 +120,8 @@ export default function HomePage() {
 
   return (
     <div className="space-y-16 pb-16">
-      {/* 1. HERO MASTHEAD BANNER - DESIGN.md editorial style */}
-      <section className="border-b border-[#d8d8d8] bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-8 py-8 md:py-12">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-            {/* Left Content */}
-            <div className="lg:col-span-7 space-y-6">
-              <div className="inline-flex items-center gap-2 bg-[#f0f0f0] border border-[#d8d8d8] rounded-[18px] px-3.5 py-1 text-xs">
-                <span className="w-2 h-2 rounded-full bg-[#c31833] animate-pulse" />
-                <span className="font-bold text-black uppercase tracking-wider">
-                  MỞ BÁN ĐẶC QUYỀN 2026
-                </span>
-                <span className="text-[#595959]">•</span>
-                <span className="text-[#595959]">Chính hãng VNA</span>
-              </div>
-
-              <h1 className="font-bold text-4xl sm:text-5xl lg:text-6xl text-black tracking-tight leading-[1.1]">
-                TUYỆT TÁC CÔNG NGHỆ & ÂM THANH ĐỈNH CAO
-              </h1>
-
-              <p className="text-base sm:text-lg text-[#595959] max-w-xl leading-relaxed">
-                Khám phá bộ sưu tập iPhone 16 Pro Max khung Titan, tai nghe chống ồn Sony WH-1000XM5 và loa hi-end Marshall. Trải nghiệm mua sắm bảo mật với cam kết 100% nguyên seal.
-              </p>
-
-              <div className="flex flex-wrap items-center gap-4 pt-2">
-                <Link href="/products" className="btn-pill-dark text-base py-3 px-7">
-                  <span>Khám phá ngay</span>
-                  <ArrowRight className="w-4 h-4" />
-                </Link>
-                <Link href="/products?filter=flash_sale" className="btn-pill-outline text-base py-3 px-7">
-                  Flash Sale hôm nay
-                </Link>
-              </div>
-
-              {/* Service Badges */}
-              <div className="grid grid-cols-3 gap-4 pt-6 border-t border-[#d8d8d8] text-xs">
-                <div className="flex items-center gap-2">
-                  <Truck className="w-4 h-4 text-[#fa9000]" />
-                  <span className="font-bold text-black">Giao 2H Hỏa Tốc</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <ShieldCheck className="w-4 h-4 text-[#fa9000]" />
-                  <span className="font-bold text-black">Bảo Hành 12 Tháng</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <RotateCcw className="w-4 h-4 text-[#fa9000]" />
-                  <span className="font-bold text-black">Đổi Trả 30 Ngày</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Right Hero Image Card */}
-            <div className="lg:col-span-5 relative">
-              <div className="relative aspect-4/3 w-full bg-[#f8f8f8] border border-[#d8d8d8] rounded-[10px] overflow-hidden shadow-lg">
-                <Image
-                  src="https://images.unsplash.com/photo-1695048133142-1a20484d2569?auto=format&fit=crop&w=1000&q=85"
-                  alt="iPhone 16 Pro Max Titan"
-                  fill
-                  priority
-                  className="object-cover"
-                  sizes="(max-width: 1024px) 100vw, 45vw"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex flex-col justify-end p-6 text-white">
-                  <span className="bg-[#fa9000] text-black text-xs font-black px-2.5 py-1 rounded-[2px] uppercase tracking-wider self-start mb-2">
-                    HOT DEAL
-                  </span>
-                  <h3 className="font-bold text-xl sm:text-2xl text-white">
-                    iPhone 16 Pro Max 256GB Titan Tự Nhiên
-                  </h3>
-                  <div className="flex items-center justify-between mt-2">
-                    <span className="font-bold text-lg text-[#ffa000]">31.490.000 ₫</span>
-                    <Link
-                      href="/products/iphone-16-pro-max-256gb"
-                      className="text-xs font-bold underline hover:text-[#ffa000] transition-colors"
-                    >
-                      Xem chi tiết →
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      {/* 1. HERO VIDEO/IMAGE MASTHEAD BANNER - 1080P FULL HD */}
+      <HeroBanner />
 
       {/* 2. FLASH SALE SECTION - DESIGN.md Live Red apparatus */}
       <section className="max-w-7xl mx-auto px-4 sm:px-8">

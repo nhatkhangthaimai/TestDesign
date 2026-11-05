@@ -458,17 +458,31 @@ model Wishlist {
 }
 
 model Banner {
-  id        String   @id @default(uuid()) @db.VarChar(36)
-  title     String   @db.VarChar(255)
-  subtitle  String?  @db.VarChar(255)
-  imageUrl  String   @db.Text
-  linkUrl   String?  @default("/products") @db.VarChar(255)
-  badgeText String?  @db.VarChar(100)
-  position  String   @default("HERO") @db.VarChar(50)
-  isActive  Boolean  @default(true)
-  sortOrder Int      @default(0)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id              String    @id @default(uuid()) @db.VarChar(36)
+  title           String    @db.VarChar(255)
+  subtitle        String?   @db.VarChar(255)
+  description     String?   @db.Text
+  imageUrl        String    @db.Text
+  videoUrl        String?   @db.Text
+  videoMobileUrl  String?   @db.Text
+  posterUrl       String?   @db.Text
+  mediaType       String    @default("IMAGE") @db.VarChar(20)
+  linkUrl         String?   @default("/products") @db.VarChar(255)
+  badgeText       String?   @db.VarChar(100)
+  ctaText         String?   @default("Khám Phá Ngay") @db.VarChar(100)
+  textColor       String?   @default("#ffffff") @db.VarChar(50)
+  overlayColor    String?   @default("#000000") @db.VarChar(50)
+  overlayOpacity  Float?    @default(0.4)
+  contentPosition String?   @default("LEFT") @db.VarChar(50)
+  targetDevice    String?   @default("ALL") @db.VarChar(50)
+  position        String    @default("HERO") @db.VarChar(50)
+  isActive        Boolean   @default(true)
+  sortOrder       Int       @default(0)
+  durationSeconds Int?      @default(8)
+  startDate       DateTime?
+  endDate         DateTime?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
 
   @@map("banners")
 }

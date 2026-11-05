@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import {
   LayoutDashboard,
+  Tv,
   Package,
   ShoppingBag,
   Users,
@@ -16,6 +17,8 @@ import {
   ShieldCheck,
   LogOut,
   ExternalLink,
+  Menu,
+  X,
 } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
 
@@ -24,6 +27,12 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   const router = useRouter();
   const { user, loading, logout, isAdmin } = useAuth();
   const [authorized, setAuthorized] = useState<boolean | null>(null);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  useEffect(() => {
+    // Close mobile menu on route change
+    setMobileMenuOpen(false);
+  }, [pathname]);
 
   useEffect(() => {
     if (!loading) {
@@ -73,6 +82,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
   const navItems = [
     { href: "/admin", label: "Tổng Quan (Dashboard)", icon: LayoutDashboard },
+    { href: "/admin/banners", label: "Quản Lý Video Banner", icon: Tv },
     { href: "/admin/products", label: "Quản Lý Sản Phẩm", icon: Package },
     { href: "/admin/orders", label: "Quản Lý Đơn Hàng", icon: ShoppingBag },
     { href: "/admin/customers", label: "Quản Lý Khách Hàng", icon: Users },
@@ -83,49 +93,119 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   return (
     <div className="min-h-screen bg-[#181818] text-[#dddddd] flex flex-col">
       {/* Top Admin Utility Strip - DESIGN.md network-utility-strip */}
-      <div className="bg-[#100e2f] border-b border-[#272967] py-2 px-6 flex justify-between items-center text-xs">
+      <div className="bg-[#100e2f] border-b border-[#272967] py-2.5 px-4 sm:px-6 flex justify-between items-center text-xs">
         <div className="flex items-center gap-3">
-          <div className="w-7 h-7 bg-[#fa9000] text-white flex items-center justify-center font-black text-sm">
+          {/* Mobile Hamburger Toggle */}
+          <button
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="md:hidden text-white hover:text-[#fa9000] p-1 -ml-1 transition-colors"
+            title="Mở menu quản trị"
+          >
+            {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+          </button>
+
+          <div className="w-7 h-7 bg-[#fa9000] text-white flex items-center justify-center font-black text-sm shrink-0">
             AJ
           </div>
-          <span className="font-bold tracking-wider text-white">
+          <span className="font-bold tracking-wider text-white hidden sm:inline">
             AJ COMMERCE • HỆ THỐNG QUẢN TRỊ DOANH NGHIỆP
           </span>
-          <span className="bg-[#dba200] text-black text-[10px] font-black px-1.5 py-0.2 rounded uppercase">
+          <span className="font-bold tracking-wider text-white sm:hidden">
+            AJ COMMERCE
+          </span>
+          <span className="bg-[#dba200] text-black text-[10px] font-black px-1.5 py-0.2 rounded uppercase shrink-0">
             ENTERPRISE
           </span>
         </div>
 
-        <div className="flex items-center gap-4 text-xs">
+        <div className="flex items-center gap-3 sm:gap-4 text-xs">
           <Link
             href="/"
             target="_blank"
-            className="flex items-center gap-1.5 text-[#dba200] hover:text-white transition-colors"
+            className="hidden sm:flex items-center gap-1.5 text-[#dba200] hover:text-white transition-colors"
           >
-            <span>Xem Cửa Hàng Trực Tiếp</span>
+            <span>Cửa Hàng</span>
             <ExternalLink className="w-3.5 h-3.5" />
           </Link>
 
-          <span className="text-[#595959]">|</span>
+          <span className="text-[#595959] hidden sm:inline">|</span>
 
-          <span className="font-bold text-white flex items-center gap-1.5">
-            <ShieldCheck className="w-3.5 h-3.5 text-[#00cbca]" />
-            {user?.name}
+          <span className="font-bold text-white flex items-center gap-1.5 truncate max-w-[120px] sm:max-w-none">
+            <ShieldCheck className="w-3.5 h-3.5 text-[#00cbca] shrink-0" />
+            <span className="truncate">{user?.name}</span>
           </span>
 
           <button
             onClick={() => logout()}
-            className="text-[#bc0000] hover:text-white transition-colors flex items-center gap-1"
+            className="text-[#bc0000] hover:text-white transition-colors flex items-center gap-1 shrink-0"
           >
             <LogOut className="w-3.5 h-3.5" />
-            <span>Đăng xuất</span>
+            <span className="hidden sm:inline">Đăng xuất</span>
           </button>
         </div>
       </div>
 
       {/* Main Admin Shell */}
-      <div className="flex-1 flex">
-        {/* Sidebar Navigation */}
+      <div className="flex-1 flex relative">
+        {/* Mobile Navigation Drawer */}
+        {mobileMenuOpen && (
+          <div className="fixed inset-0 z-40 md:hidden flex">
+            <div
+              className="fixed inset-0 bg-black/70 backdrop-blur-xs transition-opacity"
+              onClick={() => setMobileMenuOpen(false)}
+            />
+            <div className="relative w-64 max-w-[80vw] bg-[#141414] border-r border-[#2a2a2a] p-4 flex flex-col justify-between z-50">
+              <div className="space-y-4">
+                <div className="flex items-center justify-between pb-3 border-b border-[#2a2a2a]">
+                  <span className="text-[10px] font-mono uppercase tracking-widest text-[#595959]">
+                    MENU QUẢN TRỊ
+                  </span>
+                  <button
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="text-[#bebebe] hover:text-white p-1"
+                  >
+                    <X className="w-4 h-4" />
+                  </button>
+                </div>
+
+                <nav className="space-y-1.5">
+                  {navItems.map((item) => {
+                    const Icon = item.icon;
+                    const isActive = pathname === item.href;
+                    return (
+                      <Link
+                        key={item.href}
+                        href={item.href}
+                        onClick={() => setMobileMenuOpen(false)}
+                        className={`flex items-center gap-3 px-3 py-2.5 rounded-[6px] text-xs font-semibold transition-all ${
+                          isActive
+                            ? "bg-[#272967] text-white border-l-4 border-[#dba200] shadow-sm"
+                            : "text-[#dddddd] hover:bg-[#202020] hover:text-white"
+                        }`}
+                      >
+                        <Icon className={`w-4 h-4 ${isActive ? "text-[#dba200]" : "text-[#595959]"}`} />
+                        <span>{item.label}</span>
+                      </Link>
+                    );
+                  })}
+                </nav>
+              </div>
+
+              <div className="pt-4 border-t border-[#2a2a2a]">
+                <Link
+                  href="/"
+                  target="_blank"
+                  className="flex items-center justify-center gap-2 p-2 rounded bg-[#202020] text-xs font-bold text-[#dba200] hover:bg-[#2a2a2a]"
+                >
+                  <ExternalLink className="w-3.5 h-3.5" />
+                  <span>Xem Cửa Hàng Trực Tiếp</span>
+                </Link>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Desktop Sidebar Navigation */}
         <aside className="w-64 bg-[#141414] border-r border-[#2a2a2a] p-4 flex flex-col justify-between shrink-0 hidden md:flex">
           <div className="space-y-6">
             <div className="px-3 pt-2">
@@ -158,13 +238,13 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
           <div className="p-3 bg-[#1e1e1e] rounded-[6px] border border-[#2a2a2a] text-[11px] text-[#595959] space-y-1">
             <p className="font-bold text-[#dddddd]">Hệ thống: v2.6-PROD</p>
-            <p>Database: PostgreSQL Ready</p>
+            <p>Database: TiDB Cloud High-Scale</p>
             <p>Server Status: 100% Operational</p>
           </div>
         </aside>
 
         {/* Content Area */}
-        <main className="flex-1 p-6 md:p-8 overflow-y-auto">
+        <main className="flex-1 p-4 sm:p-6 md:p-8 overflow-y-auto">
           {children}
         </main>
       </div>
