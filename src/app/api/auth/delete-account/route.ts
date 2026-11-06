@@ -71,7 +71,7 @@ export async function POST(req: NextRequest) {
     // Clear auth cookie
     const response = NextResponse.json({
       success: true,
-      message: "Tài khoản của bạn đã được xóa thành công. Cảm ơn bạn đã sử dụng AJ Commerce.",
+      message: "Tài khoản của bạn đã được xóa thành công. Cảm ơn bạn đã sử dụng BBKCommerce.",
     });
 
     response.cookies.set("token", "", {

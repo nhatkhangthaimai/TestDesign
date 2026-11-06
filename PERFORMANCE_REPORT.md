@@ -1,5 +1,5 @@
 # BÁO CÁO HIỆU NĂNG TRUY VẤN VÀ TỐI ƯU CƠ SỞ DỮ LIỆU (PERFORMANCE REPORT)
-## AJ COMMERCE – BENCHMARK KHI QUY MÔ DỮ LIỆU ĐẠT TỐI THIỂU 5GB
+## BBKCOMMERCE – BENCHMARK KHI QUY MÔ DỮ LIỆU ĐẠT TỐI THIỂU 5GB
 
 ---
 
@@ -10,7 +10,7 @@ Khi cơ sở dữ liệu thương mại điện tử tăng trưởng từ vài t
 - Phân trang `OFFSET / LIMIT` bị chậm dần ở các trang cuối.
 - Khóa bảng (Table Lock) khi có giao dịch ghi đồng thời.
 
-Báo cáo này phân tích chi tiết hiệu năng thực tế của **AJ Commerce** sau khi áp dụng các giải pháp kiến trúc tối ưu: **Chỉ mục B-Tree đa tầng**, **Tách biệt luồng Telemetry**, **Cơ chế ghi trước WAL (Write-Ahead Logging)** và **Server-side Pagination**.
+Báo cáo này phân tích chi tiết hiệu năng thực tế của **BBKCommerce** sau khi áp dụng các giải pháp kiến trúc tối ưu: **Chỉ mục B-Tree đa tầng**, **Tách biệt luồng Telemetry**, **Cơ chế ghi trước WAL (Write-Ahead Logging)** và **Server-side Pagination**.
 
 ---
 

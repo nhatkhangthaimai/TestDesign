@@ -1,6 +1,6 @@
 # BÁO CÁO HOÀN THIỆN TOÀN DIỆN: QUẢN LÝ SẢN PHẨM ADMIN & TÀI KHOẢN NGƯỜI DÙNG
 
-**Hệ thống:** AJ Commerce - Nền Tảng Thương Mại Điện Tử Công Nghệ Đỉnh Cao  
+**Hệ thống:** BBKCommerce - Nền Tảng Thương Mại Điện Tử Công Nghệ Đỉnh Cao  
 **Công nghệ:** Next.js (App Router), React 19, TypeScript, Tailwind CSS, TiDB Cloud (MySQL-compatible), Prisma ORM, AWS EC2  
 **Thời gian hoàn thành:** 03/11/2026  
 **Trạng thái kiểm thử:** PASS 100% (10/10 Test Suites & 139/139 Catalog Products)  

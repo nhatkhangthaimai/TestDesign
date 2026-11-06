@@ -1,4 +1,4 @@
-# AJ COMMERCE - BÁO CÁO PHÂN TÍCH VÀ ĐO ĐẠC DUNG LƯỢNG DATABASE (TIDB CLOUD VS SQLITE)
+# BBKCOMMERCE - BÁO CÁO PHÂN TÍCH VÀ ĐO ĐẠC DUNG LƯỢNG DATABASE (TIDB CLOUD VS SQLITE)
 
 ---
 
@@ -19,7 +19,7 @@ WHERE table_schema = 'test'
 GROUP BY table_schema;
 ```
 
-#### Cách 2: Xem trực tiếp từ Trang Quản Trị Hệ Thống AJ Commerce
+#### Cách 2: Xem trực tiếp từ Trang Quản Trị Hệ Thống BBKCommerce
 Truy cập vào màn hình quản trị `/admin/database` hoặc gọi API:
 ```bash
 GET /api/admin/database

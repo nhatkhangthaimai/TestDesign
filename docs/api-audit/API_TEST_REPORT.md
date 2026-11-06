@@ -1,4 +1,4 @@
-# AJ COMMERCE - AUTOMATED API TEST REPORT & VERIFICATION SUITE
+# BBKCOMMERCE - AUTOMATED API TEST REPORT & VERIFICATION SUITE
 
 > **Thực Hiện Bởi**: Senior QA Automation Engineer & Principal API Architect  
 > **Môi Trường**: Production Simulation (`http://localhost:3000`) & TiDB Cloud Distributed Cluster  
@@ -32,7 +32,7 @@
 
 ```
 ================================================================================
-  AJ COMMERCE FULL API AUDIT & AUTOMATED TEST SUITE
+  BBKCOMMERCE FULL API AUDIT & AUTOMATED TEST SUITE
   Target: http://localhost:3000
   Timestamp: 2026-11-03T09:59:06.820Z
 ================================================================================

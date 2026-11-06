@@ -99,7 +99,7 @@ async function generateSearchBatch(count: number): Promise<any[][]> {
 
 async function main() {
   console.log("================================================================================");
-  console.log("    AJ COMMERCE - NẠP TOÀN BỘ 5GB DỮ LIỆU ĐÁM MÂY LÊN TIDB CLOUD (AWS)        ");
+  console.log("    BBK COMMERCE - NẠP TOÀN BỘ 5GB DỮ LIỆU ĐÁM MÂY LÊN TIDB CLOUD (AWS)        ");
   console.log("================================================================================");
   console.log(`✓ Mục tiêu dung lượng an toàn: ${TARGET_MB} MB (~4.85 GiB)`);
   console.log(`✓ Hạn mức miễn phí TiDB Serverless: 5,120 MB (5.00 GiB)`);

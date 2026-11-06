@@ -1,4 +1,4 @@
-# AJ COMMERCE - BÁO CÁO CÁC API THIẾU ĐÃ ĐƯỢC BỔ SUNG TOÀN DIỆN
+# BBKCOMMERCE - BÁO CÁO CÁC API THIẾU ĐÃ ĐƯỢC BỔ SUNG TOÀN DIỆN
 
 Trong quá trình audit kiến trúc toàn sàn và quét tương tác người dùng trên giao diện frontend (`/cart`, `/checkout`, `/account`, `/admin`), chúng tôi đã phát hiện và phát triển bổ sung đầy đủ **18 API endpoints bị thiếu** để đảm bảo hệ thống vận hành chuẩn chỉnh, không phụ thuộc vào mock data tạm thời.
 

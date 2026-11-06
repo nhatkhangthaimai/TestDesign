@@ -1,11 +1,11 @@
 # HƯỚNG DẪN KẾT NỐI & DI CHUYỂN DỮ LIỆU TIDB CLOUD (TIDB IMPORT GUIDE)
-## AJ COMMERCE – BIG DATA E-COMMERCE & DISTRIBUTED SQL ARCHITECTURE
+## BBKCOMMERCE – BIG DATA E-COMMERCE & DISTRIBUTED SQL ARCHITECTURE
 
 ---
 
 ### 1. PHÂN TÍCH TIỀM NĂNG & HẠN MỨC TIDB CLOUD (SERVERLESS VS DEDICATED)
 
-Hệ thống **AJ Commerce** được xây dựng với khả năng tương thích 100% giao thức **MySQL Wire Protocol** của **TiDB Cloud**:
+Hệ thống **BBKCommerce** được xây dựng với khả năng tương thích 100% giao thức **MySQL Wire Protocol** của **TiDB Cloud**:
 
 #### 1.1. Gói TiDB Cloud Serverless (Starter - Miễn phí)
 - **Hạn mức lưu trữ:** Tối đa **5 GiB Storage** miễn phí.

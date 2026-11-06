@@ -108,10 +108,10 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             AJ
           </div>
           <span className="font-bold tracking-wider text-white hidden sm:inline">
-            AJ COMMERCE • HỆ THỐNG QUẢN TRỊ DOANH NGHIỆP
+            BBKCOMMERCE • HỆ THỐNG QUẢN TRỊ DOANH NGHIỆP
           </span>
           <span className="font-bold tracking-wider text-white sm:hidden">
-            AJ COMMERCE
+            BBKCOMMERCE
           </span>
           <span className="bg-[#dba200] text-black text-[10px] font-black px-1.5 py-0.2 rounded uppercase shrink-0">
             ENTERPRISE
@@ -177,11 +177,10 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                         key={item.href}
                         href={item.href}
                         onClick={() => setMobileMenuOpen(false)}
-                        className={`flex items-center gap-3 px-3 py-2.5 rounded-[6px] text-xs font-semibold transition-all ${
-                          isActive
+                        className={`flex items-center gap-3 px-3 py-2.5 rounded-[6px] text-xs font-semibold transition-all ${isActive
                             ? "bg-[#272967] text-white border-l-4 border-[#dba200] shadow-sm"
                             : "text-[#dddddd] hover:bg-[#202020] hover:text-white"
-                        }`}
+                          }`}
                       >
                         <Icon className={`w-4 h-4 ${isActive ? "text-[#dba200]" : "text-[#595959]"}`} />
                         <span>{item.label}</span>
@@ -222,11 +221,10 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                   <Link
                     key={item.href}
                     href={item.href}
-                    className={`flex items-center gap-3 px-3 py-2.5 rounded-[6px] text-xs font-semibold transition-all ${
-                      isActive
+                    className={`flex items-center gap-3 px-3 py-2.5 rounded-[6px] text-xs font-semibold transition-all ${isActive
                         ? "bg-[#272967] text-white border-l-4 border-[#dba200] shadow-sm"
                         : "text-[#dddddd] hover:bg-[#202020] hover:text-white"
-                    }`}
+                      }`}
                   >
                     <Icon className={`w-4 h-4 ${isActive ? "text-[#dba200]" : "text-[#595959]"}`} />
                     <span>{item.label}</span>

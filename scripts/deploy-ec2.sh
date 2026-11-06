@@ -2,7 +2,7 @@
 set -e
 
 echo "================================================================================"
-echo "          TIẾN TRÌNH TỰ ĐỘNG TRIỂN KHAI AJ COMMERCE LÊN AWS EC2                 "
+echo "          TIẾN TRÌNH TỰ ĐỘNG TRIỂN KHAI BBKCOMMERCE LÊN AWS EC2                 "
 echo "================================================================================"
 
 # 1. Cấu hình Swap 2GB (Bảo vệ tràn RAM khi build trên EC2 t2.micro / t3.micro)

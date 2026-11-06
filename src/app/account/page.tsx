@@ -535,11 +535,10 @@ export default function AccountPage() {
                 <button
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id as any)}
-                  className={`w-full px-4 py-3 text-left text-xs font-bold flex items-center justify-between transition-colors ${
-                    isActive
+                  className={`w-full px-4 py-3 text-left text-xs font-bold flex items-center justify-between transition-colors ${isActive
                       ? "bg-[#181818] text-white"
                       : "bg-white text-[#222222] hover:bg-[#f8f8f8]"
-                  }`}
+                    }`}
                 >
                   <div className="flex items-center gap-2.5">
                     <Icon className={`w-4 h-4 ${isActive ? "text-[#fa9000]" : "text-[#595959]"}`} />
@@ -669,13 +668,12 @@ export default function AccountPage() {
                         <div className="text-right">
                           <span className="font-bold text-black block">{formatVND(o.total)}</span>
                           <span
-                            className={`inline-block mt-1 text-[10px] px-2 py-0.5 rounded font-bold uppercase ${
-                              o.status === "DELIVERED"
+                            className={`inline-block mt-1 text-[10px] px-2 py-0.5 rounded font-bold uppercase ${o.status === "DELIVERED"
                                 ? "bg-emerald-100 text-emerald-800"
                                 : o.status === "CANCELLED"
-                                ? "bg-red-100 text-red-800"
-                                : "bg-blue-100 text-blue-800"
-                            }`}
+                                  ? "bg-red-100 text-red-800"
+                                  : "bg-blue-100 text-blue-800"
+                              }`}
                           >
                             {o.status}
                           </span>
@@ -698,7 +696,7 @@ export default function AccountPage() {
                   Chỉnh Sửa Hồ Sơ Cá Nhân
                 </h3>
                 <p className="text-xs text-[#595959] mt-0.5">
-                  Cập nhật họ tên, số điện thoại và ảnh đại diện hiển thị trên AJ Commerce.
+                  Cập nhật họ tên, số điện thoại và ảnh đại diện hiển thị trên BBKCommerce.
                 </p>
               </div>
 
@@ -826,11 +824,10 @@ export default function AccountPage() {
                         key={f.id}
                         type="button"
                         onClick={() => setOrderFilter(f.id)}
-                        className={`px-2.5 py-1 rounded-full font-bold transition-all ${
-                          orderFilter === f.id
+                        className={`px-2.5 py-1 rounded-full font-bold transition-all ${orderFilter === f.id
                             ? "bg-black text-white"
                             : "bg-[#f0f0f0] text-[#595959] hover:bg-[#e5e5e5]"
-                        }`}
+                          }`}
                       >
                         {f.label}
                       </button>
@@ -844,7 +841,7 @@ export default function AccountPage() {
                   <div className="py-12 text-center text-xs text-[#595959] space-y-2">
                     <Package className="w-10 h-10 mx-auto text-[#999999]" />
                     <p className="font-bold text-black text-sm">Không tìm thấy đơn hàng nào</p>
-                    <p>Hãy khám phá các sản phẩm công nghệ tuyệt vời trên AJ Commerce.</p>
+                    <p>Hãy khám phá các sản phẩm công nghệ tuyệt vời trên BBKCommerce.</p>
                     <Link href="/products" className="btn-pill-dark inline-block px-4 py-2 mt-2">
                       Mua sắm ngay
                     </Link>
@@ -868,22 +865,20 @@ export default function AccountPage() {
                           </div>
                           <div className="flex items-center gap-2">
                             <span
-                              className={`text-[10px] font-bold px-2 py-0.5 rounded uppercase ${
-                                order.status === "DELIVERED"
+                              className={`text-[10px] font-bold px-2 py-0.5 rounded uppercase ${order.status === "DELIVERED"
                                   ? "bg-emerald-100 text-emerald-800"
                                   : order.status === "CANCELLED"
-                                  ? "bg-red-100 text-red-800"
-                                  : "bg-blue-100 text-blue-800"
-                              }`}
+                                    ? "bg-red-100 text-red-800"
+                                    : "bg-blue-100 text-blue-800"
+                                }`}
                             >
                               {order.status}
                             </span>
                             <span
-                              className={`text-[10px] font-bold px-2 py-0.5 rounded uppercase ${
-                                order.paymentStatus === "PAID"
+                              className={`text-[10px] font-bold px-2 py-0.5 rounded uppercase ${order.paymentStatus === "PAID"
                                   ? "bg-emerald-50 text-emerald-700 border border-emerald-300"
                                   : "bg-amber-50 text-amber-700 border border-amber-300"
-                              }`}
+                                }`}
                             >
                               {order.paymentStatus}
                             </span>
@@ -996,11 +991,10 @@ export default function AccountPage() {
                   {addresses.map((addr) => (
                     <div
                       key={addr.id}
-                      className={`p-4 rounded-[10px] border relative space-y-2 text-xs transition-all ${
-                        addr.isDefault
+                      className={`p-4 rounded-[10px] border relative space-y-2 text-xs transition-all ${addr.isDefault
                           ? "border-[#fa9000] bg-[#fffaf2]"
                           : "border-[#d8d8d8] bg-white hover:border-black"
-                      }`}
+                        }`}
                     >
                       <div className="flex items-center justify-between pb-2 border-b border-[#f0f0f0]">
                         <div className="flex items-center gap-2">
@@ -1577,7 +1571,7 @@ export default function AccountPage() {
 
             <div className="space-y-2 text-[#595959]">
               <p>
-                Hành động này sẽ <strong>hủy bỏ vĩnh viễn</strong> quyền truy cập của bạn vào hệ thống AJ Commerce.
+                Hành động này sẽ <strong>hủy bỏ vĩnh viễn</strong> quyền truy cập của bạn vào hệ thống BBKCommerce.
               </p>
               <ul className="list-disc pl-4 space-y-1 text-[11px]">
                 <li>Thông tin cá nhân và sổ địa chỉ sẽ bị xóa.</li>

@@ -141,7 +141,7 @@ export default function HeroBanner({ initialBanners = [] }: HeroBannerProps) {
           <div className="max-w-2xl space-y-6">
             <span className="inline-flex items-center gap-2 bg-[#fa9000]/20 border border-[#fa9000] rounded-full px-4 py-1 text-xs font-bold text-[#fa9000] uppercase tracking-wider">
               <span className="w-2 h-2 rounded-full bg-[#fa9000] animate-ping" />
-              AJ COMMERCE 2026
+              BBKCOMMERCE 2026
             </span>
             <h1 className="text-4xl sm:text-6xl font-black tracking-tight leading-tight">
               ĐỈNH CAO CÔNG NGHỆ & ÂM THANH HI-END
@@ -176,8 +176,8 @@ export default function HeroBanner({ initialBanners = [] }: HeroBannerProps) {
     currentBanner.contentPosition === "CENTER"
       ? "text-center items-center mx-auto"
       : currentBanner.contentPosition === "RIGHT"
-      ? "text-right items-end ml-auto"
-      : "text-left items-start mr-auto";
+        ? "text-right items-end ml-auto"
+        : "text-left items-start mr-auto";
 
   return (
     <section className="relative w-full bg-[#100e2f] overflow-hidden group select-none">
@@ -353,11 +353,10 @@ export default function HeroBanner({ initialBanners = [] }: HeroBannerProps) {
                   if (timerRef.current) clearTimeout(timerRef.current);
                   setCurrentIndex(idx);
                 }}
-                className={`transition-all rounded-full ${
-                  idx === currentIndex
+                className={`transition-all rounded-full ${idx === currentIndex
                     ? "w-8 h-2 bg-[#fa9000]"
                     : "w-2 h-2 bg-white/50 hover:bg-white"
-                }`}
+                  }`}
                 title={`Chuyển đến banner ${idx + 1}`}
                 aria-label={`Slide ${idx + 1}`}
               />

@@ -1,11 +1,11 @@
 # MÔ TẢ BỘ DỮ LIỆU THƯƠNG MẠI ĐIỆN TỬ (DATASET DESCRIPTION)
-## AJ COMMERCE – 5GB+ ENTERPRISE E-COMMERCE BENCHMARK DATASET
+## BBKCOMMERCE – 5GB+ ENTERPRISE E-COMMERCE BENCHMARK DATASET
 
 ---
 
 ### 1. TỔNG QUAN VỀ BỘ DỮ LIỆU
 
-Bộ dữ liệu của hệ thống **AJ Commerce** được xây dựng theo chuẩn dữ liệu thương mại điện tử thực tế, phục vụ hai mục đích song hành:
+Bộ dữ liệu của hệ thống **BBKCommerce** được xây dựng theo chuẩn dữ liệu thương mại điện tử thực tế, phục vụ hai mục đích song hành:
 1. **Dữ liệu hoạt động kinh doanh trực tiếp:** Danh mục sản phẩm công nghệ cao cấp chính hãng tại thị trường Việt Nam (Apple, Samsung, Sony, Marshall, Garmin, Roborock...), có thông số kỹ thuật, hình ảnh CDN, giá niêm yết, tồn kho và các giao dịch đặt hàng thật.
 2. **Bộ dữ liệu kiểm thử tải và phân tích hành vi người dùng (Big Data Telemetry & Audit Dataset):** Gồm hàng triệu bản ghi nhật ký tương tác, sự kiện xem sản phẩm, từ khóa tìm kiếm, biến động xuất nhập kho và nhật ký kiểm toán hệ thống đạt dung lượng **tối thiểu 5.368.709.120 bytes (5 GiB)**.
 

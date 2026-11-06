@@ -1,11 +1,11 @@
 # BÁO CÁO KIẾN TRÚC CƠ SỞ DỮ LIỆU (DATABASE REPORT)
-## AJ COMMERCE – NỀN TẢNG THƯƠNG MẠI ĐIỆN TỬ CAO CẤP & BIG DATA
+## BBKCOMMERCE – NỀN TẢNG THƯƠNG MẠI ĐIỆN TỬ CAO CẤP & BIG DATA
 
 ---
 
 ### 1. TỔNG QUAN HỆ THỐNG VÀ KIẾN TRÚC DỮ LIỆU
 
-Hệ thống cơ sở dữ liệu của **AJ Commerce (Premium Editorial Store)** được thiết kế theo mô hình **Đa tầng (Multi-Tier) & Hỗ trợ Đa Động cơ (Multi-Engine Architecture)**, kết hợp giữa tính toàn vẹn dữ liệu giao dịch thương mại điện tử khắt khe (ACID) và khả năng lưu trữ, phân tích dữ liệu quy mô lớn (Big Data / Telemetry):
+Hệ thống cơ sở dữ liệu của **BBKCommerce (Premium Editorial Store)** được thiết kế theo mô hình **Đa tầng (Multi-Tier) & Hỗ trợ Đa Động cơ (Multi-Engine Architecture)**, kết hợp giữa tính toàn vẹn dữ liệu giao dịch thương mại điện tử khắt khe (ACID) và khả năng lưu trữ, phân tích dữ liệu quy mô lớn (Big Data / Telemetry):
 
 1. **Môi Trường Phát Triển & Kiểm Thử Cục Bộ (Local High-Performance Engine):**
    - **Động cơ:** SQLite 3 với cơ chế ghi trước WAL (Write-Ahead Logging) và chỉ mục B-Tree.
@@ -135,7 +135,7 @@ Hệ thống phân định rành mạch giữa **Dữ liệu Nghiệp vụ Bán 
 
 Một trong những yêu cầu nghiêm ngặt nhất của đồ án là: **Bộ dữ liệu kiểm thử 5GB không được phép làm sai lệch hoặc ô nhiễm dữ liệu kinh doanh thật của cửa hàng**.
 
-Hệ thống AJ Commerce giải quyết triệt để yêu cầu này thông qua 4 cơ chế:
+Hệ thống BBKCommerce giải quyết triệt để yêu cầu này thông qua 4 cơ chế:
 1. **Phân tách bảng chức năng (Functional Partitioning):**
    - Dữ liệu bán hàng thực tế nằm tại các bảng nghiệp vụ: `orders`, `order_items`, `payments`, `reviews`, `users`.
    - Dữ liệu quy mô lớn (hàng triệu bản ghi) nằm tại các bảng Telemetry & Audit: `product_view_events`, `search_events`, `inventory_transactions`, `audit_logs`.

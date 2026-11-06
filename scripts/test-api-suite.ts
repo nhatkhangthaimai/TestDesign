@@ -1,5 +1,5 @@
 /**
- * AJ COMMERCE - AUTOMATED API TEST SUITE
+ * BBKCOMMERCE - AUTOMATED API TEST SUITE
  * Tests all 12 domains across 46 endpoints against the live Next.js server.
  */
 
@@ -119,7 +119,7 @@ async function testApi(
 
 async function runTestSuite() {
   console.log("=".repeat(80));
-  console.log(`  AJ COMMERCE FULL API AUDIT & AUTOMATED TEST SUITE`);
+  console.log(`  BBKCOMMERCE FULL API AUDIT & AUTOMATED TEST SUITE`);
   console.log(`  Target: ${BASE_URL}`);
   console.log(`  Timestamp: ${new Date().toISOString()}`);
   console.log("=".repeat(80));

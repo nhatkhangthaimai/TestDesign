@@ -1,11 +1,11 @@
 # HƯỚNG DẪN IMPORT DỮ LIỆU TỪNG GIAI ĐOẠN (IMPORT GUIDE)
-## AJ COMMERCE – 5GB+ STAGED DATA IMPORT & BENCHMARKING
+## BBKCOMMERCE – 5GB+ STAGED DATA IMPORT & BENCHMARKING
 
 ---
 
 ### 1. QUY TRÌNH NẠP DỮ LIỆU TỔNG QUAN
 
-Hệ thống import dữ liệu của **AJ Commerce** được thiết kế chia thành 5 giai đoạn có kiểm soát và checkpoint:
+Hệ thống import dữ liệu của **BBKCommerce** được thiết kế chia thành 5 giai đoạn có kiểm soát và checkpoint:
 
 | Giai Đoạn | Mục Tiêu Dung Lượng | Số Lượng Bản Ghi Dự Kiến | Mục Đích Kiểm Thử |
 | :---: | :---: | :---: | :--- |

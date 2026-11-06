@@ -1,6 +1,6 @@
-# AJ COMMERCE - FULL API ENDPOINT INVENTORY & AUDIT CATALOG
+# BBKCOMMERCE - FULL API ENDPOINT INVENTORY & AUDIT CATALOG
 
-> **Hệ Thống**: AJ Commerce – Premium Editorial Store  
+> **Hệ Thống**: BBKCommerce – Premium Editorial Store  
 > **Kiến Trúc**: Next.js App Router (16.4.3), Prisma ORM (6.19.3), Dual Database (TiDB Cloud Serverless & Local SQLite 5GB)  
 > **Cập Nhật**: Tháng 11/2026  
 > **Tổng Số Endpoints Đã Kiểm Thử**: 55 API Endpoints  

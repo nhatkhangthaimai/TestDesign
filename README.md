@@ -1,4 +1,4 @@
-# AJ COMMERCE - NỀN TẢNG THƯƠNG MẠI ĐIỆN TỬ CAO CẤP (PRODUCTION READY)
+# BBKCOMMERCE - NỀN TẢNG THƯƠNG MẠI ĐIỆN TỬ CAO CẤP (PRODUCTION READY)
 
 Hệ thống thương mại điện tử chuyên nghiệp, hoàn chỉnh toàn bộ tính năng từ **Khách hàng mua sắm (Storefront)** đến **Trung tâm điều hành doanh nghiệp (Admin Portal)**, đáp ứng các tiêu chuẩn khắt khe về bảo mật, hiệu năng và thẩm mỹ biên tập cao cấp theo tài liệu [DESIGN.md](DESIGN.md).
 

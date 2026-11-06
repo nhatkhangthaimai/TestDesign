@@ -98,7 +98,7 @@ function saveCheckpoint(data: Checkpoint) {
 export async function runGenerator(targetBytes: number, stageNum?: number) {
   const startBytes = getDatabaseSize();
   console.log("================================================================================");
-  console.log("  AJ COMMERCE - HỆ THỐNG SINH DỮ LIỆU THƯƠNG MẠI ĐIỆN TỬ QUY MÔ LỚN (5GB+)");
+  console.log("  BBK COMMERCE - HỆ THỐNG SINH DỮ LIỆU THƯƠNG MẠI ĐIỆN TỬ QUY MÔ LỚN (5GB+)");
   console.log("================================================================================");
   console.log(`Dung lượng ban đầu: ${formatBytes(startBytes)}`);
   console.log(`Dung lượng mục tiêu: ${formatBytes(targetBytes)}`);

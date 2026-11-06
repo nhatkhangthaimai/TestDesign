@@ -1,4 +1,4 @@
-# AJ COMMERCE - BÁO CÁO CÁC LỖI ĐÃ ĐƯỢC PHÁT HIỆN VÀ KHẮC PHỤC TRIỆT ĐỂ
+# BBKCOMMERCE - BÁO CÁO CÁC LỖI ĐÃ ĐƯỢC PHÁT HIỆN VÀ KHẮC PHỤC TRIỆT ĐỂ
 
 Trong quá trình audit mã nguồn, kiểm tra cơ sở dữ liệu TiDB Cloud và chạy kiểm thử tự động, chúng tôi đã phát hiện và xử lý dứt điểm các lỗi sau:
 

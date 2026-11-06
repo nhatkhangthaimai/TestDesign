@@ -1,11 +1,11 @@
 # BÁO CÁO MINH CHỨNG DUNG LƯỢNG DATABASE (DATABASE SIZE REPORT)
-## AJ COMMERCE – BẰNG CHỨNG ĐẠT CHUẨN TỐI THIỂU 5GB TRONG CƠ SỞ DỮ LIỆU
+## BBKCOMMERCE – BẰNG CHỨNG ĐẠT CHUẨN TỐI THIỂU 5GB TRONG CƠ SỞ DỮ LIỆU
 
 ---
 
 ### 1. TÓM TẮT KẾT QUẢ ĐẠT ĐƯỢC
 
-Cơ sở dữ liệu của hệ thống **AJ Commerce** đã được nâng cấp, tối ưu hóa và nạp dữ liệu có cấu trúc đạt và vượt cả hai chuẩn dung lượng quy định:
+Cơ sở dữ liệu của hệ thống **BBKCommerce** đã được nâng cấp, tối ưu hóa và nạp dữ liệu có cấu trúc đạt và vượt cả hai chuẩn dung lượng quy định:
 
 | Tiêu Chí Đo Lường | Quy Chuẩn Đồ Án | Kết Quả Thực Tế Đạt Được | Trạng Thái Đánh Giá |
 | :--- | :---: | :---: | :---: |
@@ -113,7 +113,7 @@ FROM pragma_page_count(), pragma_page_size();
 
 ### 5. KẾT LUẬN
 
-Hệ thống **AJ Commerce** đã hoàn thành xuất sắc yêu cầu nâng cấp dữ liệu lên **tối thiểu 5GB**:
+Hệ thống **BBKCommerce** đã hoàn thành xuất sắc yêu cầu nâng cấp dữ liệu lên **tối thiểu 5GB**:
 1. Đạt và vượt cả 2 chuẩn **5.000.000.000 bytes (5GB)** và **5.368.709.120 bytes (5GiB)** một cách minh bạch, có thể đo lường và kiểm chứng từng byte.
 2. Dữ liệu có cấu trúc nghiệp vụ hoàn chỉnh, có khóa ngoại, chỉ mục, quan hệ hợp lệ, không chứa chuỗi ngẫu nhiên vô nghĩa.
 3. Tách biệt 100% giữa dữ liệu bán hàng thật và dữ liệu đo kiểm lớn, bảo toàn doanh thu và trải nghiệm mua sắm mượt mà trên giao diện người dùng.

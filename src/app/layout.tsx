@@ -16,12 +16,12 @@ const roboto = Roboto({
 });
 
 export const metadata: Metadata = {
-  title: "AJ Commerce - Nền Tảng Thương Mại Điện Tử Cao Cấp",
+  title: "BBKCommerce - Nền Tảng Thương Mại Điện Tử Cao Cấp",
   description:
     "Trải nghiệm mua sắm công nghệ đỉnh cao, âm thanh Hi-End, smartphone và đồng hồ thông minh chính hãng với giao diện biên tập sang trọng chuẩn quốc tế.",
   keywords: "thương mại điện tử, công nghệ, iPhone 16 Pro Max, Sony WH-1000XM5, Marshall, Garmin",
   openGraph: {
-    title: "AJ Commerce - Nền Tảng Thương Mại Điện Tử Cao Cấp",
+    title: "BBKCommerce - Nền Tảng Thương Mại Điện Tử Cao Cấp",
     description: "Cửa hàng bán lẻ trực tuyến chính ngạch với trải nghiệm mua sắm hiện đại.",
     type: "website",
     locale: "vi_VN",

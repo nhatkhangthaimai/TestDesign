@@ -12,7 +12,7 @@ interface TableStat {
 
 export async function verifyDatabase() {
   console.log("================================================================================");
-  console.log("      AJ COMMERCE - BÁO CÁO ĐO LƯỜNG & KIỂM ĐỊNH DUNG LƯỢNG DATABASE");
+  console.log("      BBKCOMMERCE - BÁO CÁO ĐO LƯỜNG & KIỂM ĐỊNH DUNG LƯỢNG DATABASE");
   console.log("================================================================================");
 
   if (!fs.existsSync(DB_PATH)) {

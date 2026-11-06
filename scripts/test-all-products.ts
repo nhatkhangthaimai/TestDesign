@@ -18,7 +18,7 @@ interface AuditResult {
 
 async function runProductsAudit() {
   console.log("=".repeat(80));
-  console.log("  AJ COMMERCE - 100% PRODUCT DETAIL AUTOMATED AUDIT & VALIDATION");
+  console.log("  BBK COMMERCE - 100% PRODUCT DETAIL AUTOMATED AUDIT & VALIDATION");
   console.log(`  Target: ${BASE_URL}`);
   console.log(`  Timestamp: ${new Date().toISOString()}`);
   console.log("=".repeat(80));

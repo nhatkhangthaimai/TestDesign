@@ -1,4 +1,4 @@
-# AJ COMMERCE - BÁO CÁO VÀ HƯỚNG DẪN TRIỂN KHAI PRODUCTION LÊN AWS EC2
+# BBKCOMMERCE - BÁO CÁO VÀ HƯỚNG DẪN TRIỂN KHAI PRODUCTION LÊN AWS EC2
 
 > **Máy Chủ Mục Tiêu**: AWS EC2 Instance `i-0d4fafd00672b2ae1`  
 > **Địa Chỉ IP Public**: `54.255.194.4`  

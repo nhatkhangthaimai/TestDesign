@@ -68,13 +68,13 @@ async function main() {
 
   // 3. Store Settings
   const settings = [
-    { key: "STORE_NAME", value: "AJ COMMERCE PREMIUM", description: "Tên thương hiệu cửa hàng" },
+    { key: "STORE_NAME", value: "BBK COMMERCE PREMIUM", description: "Tên thương hiệu cửa hàng" },
     { key: "STORE_HOTLINE", value: "1900 6868", description: "Hotline chăm sóc khách hàng 24/7" },
     { key: "STORE_EMAIL", value: "contact@aj-commerce.vn", description: "Email hỗ trợ chính thức" },
     { key: "FREE_SHIPPING_MIN", value: "500000", description: "Mức đơn tối thiểu miễn phí vận chuyển (VND)" },
     { key: "STANDARD_SHIPPING_FEE", value: "30000", description: "Phí vận chuyển tiêu chuẩn toàn quốc (VND)" },
-    { key: "VNPay_MERCHANT_NAME", value: "AJ COMMERCE DEMO", description: "Cổng thanh toán VNPay Sandbox" },
-    { key: "MOMO_MERCHANT_NAME", value: "AJ COMMERCE MOMO", description: "Cổng thanh toán MoMo Sandbox" },
+    { key: "VNPay_MERCHANT_NAME", value: "BBK COMMERCE DEMO", description: "Cổng thanh toán VNPay Sandbox" },
+    { key: "MOMO_MERCHANT_NAME", value: "BBK COMMERCE MOMO", description: "Cổng thanh toán MoMo Sandbox" },
   ];
   for (const s of settings) {
     await prisma.storeSetting.create({ data: s });

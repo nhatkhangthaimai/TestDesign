@@ -107,7 +107,7 @@ export default function Footer() {
               <div className="w-10 h-10 bg-[#fa9000] flex items-center justify-center font-black text-white text-xl">
                 AJ
               </div>
-              <span className="font-bold text-2xl tracking-tight text-black">AJ COMMERCE</span>
+              <span className="font-bold text-2xl tracking-tight text-black">BBKCOMMERCE</span>
             </div>
             <p className="text-sm text-[#595959] leading-relaxed max-w-sm">
               Nền tảng thương mại điện tử chuyên cung cấp thiết bị công nghệ, âm thanh Hi-End và đồng hồ thông minh chính hãng chuẩn quốc tế tại Việt Nam.
@@ -230,7 +230,7 @@ export default function Footer() {
       {/* Copyright Bar */}
       <div className="bg-[#100e2f] text-white/70 py-4 px-4 sm:px-8 text-xs border-t border-white/10">
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-2">
-          <p>© 2026 AJ COMMERCE. All rights reserved. Nền tảng bán lẻ công nghệ trực tuyến cao cấp.</p>
+          <p>© 2026 BBKCOMMERCE. All rights reserved. Nền tảng bán lẻ công nghệ trực tuyến cao cấp.</p>
           <div className="flex items-center gap-4 text-white/60">
             <span>Thanh toán an toàn: COD • VNPay • MoMo • ATM</span>
           </div>
