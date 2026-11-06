@@ -161,8 +161,9 @@ export default function HeroBanner({ initialBanners = [] }: HeroBannerProps) {
     );
   }
 
-  const youtubeId = currentBanner?.videoUrl ? getYouTubeVideoId(currentBanner.videoUrl) : null;
-  const isYouTube = currentBanner?.mediaType === "VIDEO" && !!youtubeId;
+  const youtubeId =
+    getYouTubeVideoId(currentBanner?.videoUrl) || getYouTubeVideoId(currentBanner?.imageUrl);
+  const isYouTube = !!youtubeId;
   const isHtml5Video =
     currentBanner?.mediaType === "VIDEO" &&
     currentBanner.videoUrl &&

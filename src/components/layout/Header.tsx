@@ -4,7 +4,6 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import {
-  Search,
   ShoppingBag,
   User as UserIcon,
   Menu,
@@ -17,23 +16,15 @@ import {
 } from "lucide-react";
 import { useCart } from "@/context/CartContext";
 import { useAuth } from "@/context/AuthContext";
+import SearchAutocomplete from "@/components/layout/SearchAutocomplete";
 
 export default function Header() {
   const router = useRouter();
   const { itemCount, setIsCartOpen } = useCart();
   const { user, logout, isAdmin } = useAuth();
 
-  const [searchQuery, setSearchQuery] = useState("");
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
-
-  const handleSearch = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (searchQuery.trim()) {
-      router.push(`/products?search=${encodeURIComponent(searchQuery.trim())}`);
-      setIsMobileMenuOpen(false);
-    }
-  };
 
   return (
     <header className="sticky top-0 z-40 bg-white border-b border-[#d8d8d8] shadow-xs">
@@ -86,26 +77,12 @@ export default function Header() {
             </div>
           </Link>
 
-          {/* Desktop Search Capsule - DESIGN.md text-input */}
-          <form
-            onSubmit={handleSearch}
-            className="hidden lg:flex flex-1 max-w-lg items-center relative"
-          >
-            <input
-              type="text"
-              placeholder="Tìm kiếm sản phẩm, thương hiệu (iPhone, Sony, Marshall)..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="text-input-capsule pr-10 text-sm"
-            />
-            <button
-              type="submit"
-              className="absolute right-3.5 text-[#595959] hover:text-black transition-colors"
-              title="Tìm kiếm"
-            >
-              <Search className="w-4 h-4" />
-            </button>
-          </form>
+          {/* Desktop Search Capsule with Live Auto-Suggest */}
+          <SearchAutocomplete
+            className="hidden lg:block flex-1 max-w-lg"
+            inputClassName="text-input-capsule pr-10 text-sm w-full"
+            placeholder="Tìm kiếm sản phẩm, thương hiệu (iPhone, Sony, Marshall, Bàn phím)..."
+          />
 
           {/* Nav Actions Right */}
           <div className="flex items-center gap-3 sm:gap-4">
@@ -237,22 +214,14 @@ export default function Header() {
           </div>
         </div>
 
-        {/* Mobile Search Bar */}
-        <form onSubmit={handleSearch} className="mt-3 lg:hidden relative">
-          <input
-            type="text"
-            placeholder="Tìm kiếm sản phẩm..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="text-input-capsule pr-10 text-xs py-2"
+        {/* Mobile Search Bar with Live Auto-Suggest */}
+        <div className="mt-3 lg:hidden">
+          <SearchAutocomplete
+            inputClassName="text-input-capsule pr-10 text-xs py-2 w-full"
+            placeholder="Tìm kiếm sản phẩm (bàn phím, tai nghe, iPhone)..."
+            onSearchSubmit={() => setIsMobileMenuOpen(false)}
           />
-          <button
-            type="submit"
-            className="absolute right-3.5 top-2.5 text-[#595959]"
-          >
-            <Search className="w-4 h-4" />
-          </button>
-        </form>
+        </div>
       </div>
 
       {/* Primary Category Navigation Bar */}
