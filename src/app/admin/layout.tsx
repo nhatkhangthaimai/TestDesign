@@ -104,8 +104,8 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
 
-          <div className="w-7 h-7 bg-[#fa9000] text-white flex items-center justify-center font-black text-sm shrink-0">
-            AJ
+          <div className="w-auto px-1.5 h-7 bg-[#fa9000] text-white flex items-center justify-center font-black text-[11px] tracking-tighter shrink-0 shadow-xs">
+            BBK
           </div>
           <span className="font-bold tracking-wider text-white hidden sm:inline">
             BBKCOMMERCE • HỆ THỐNG QUẢN TRỊ DOANH NGHIỆP

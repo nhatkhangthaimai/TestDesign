@@ -39,8 +39,8 @@ export default function RegisterPage() {
         <div className="bg-white border border-[#e5e5e5] rounded-2xl p-8 sm:p-10 shadow-[0_8px_30px_rgb(0,0,0,0.06)]">
           {/* Header */}
           <div className="text-center mb-8">
-            <div className="inline-flex items-center justify-center w-12 h-12 bg-[#fa9000] text-white font-black text-xl rounded-xl shadow-sm mb-4">
-              AJ
+            <div className="inline-flex items-center justify-center w-12 h-12 bg-[#fa9000] text-white font-black text-base tracking-tighter rounded-xl shadow-sm mb-4">
+              BBK
             </div>
             <h1 className="text-2xl sm:text-[26px] font-bold text-[#111111] tracking-tight mb-2">
               Đăng Ký Thành Viên

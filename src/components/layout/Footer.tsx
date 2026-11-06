@@ -104,8 +104,8 @@ export default function Footer() {
           {/* Brand Info */}
           <div className="md:col-span-2 space-y-4">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-[#fa9000] flex items-center justify-center font-black text-white text-xl">
-                AJ
+              <div className="w-10 h-10 bg-[#fa9000] flex items-center justify-center font-black text-white text-base tracking-tighter shadow-xs">
+                BBK
               </div>
               <span className="font-bold text-2xl tracking-tight text-black">BBKCOMMERCE</span>
             </div>
@@ -123,7 +123,7 @@ export default function Footer() {
               </div>
               <div className="flex items-center gap-2.5">
                 <Mail className="w-4 h-4 text-black shrink-0" />
-                <span>Email: contact@aj-commerce.vn</span>
+                <span>Email: contact@bbkcommerce.vn</span>
               </div>
             </div>
           </div>

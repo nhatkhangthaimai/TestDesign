@@ -73,8 +73,8 @@ export default function Header() {
         <div className="flex items-center justify-between gap-4 md:gap-8">
           {/* Logo Block - DESIGN.md logo-block */}
           <Link href="/" className="flex items-center gap-3 shrink-0">
-            <div className="w-10 h-10 bg-[#fa9000] flex items-center justify-center font-black text-white text-xl tracking-tighter shadow-xs">
-              AJ
+            <div className="w-10 h-10 bg-[#fa9000] flex items-center justify-center font-black text-white text-base tracking-tighter shadow-xs">
+              BBK
             </div>
             <div>
               <span className="font-bold text-xl md:text-2xl text-black tracking-tight block leading-none">

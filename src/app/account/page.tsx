@@ -242,7 +242,7 @@ export default function AccountPage() {
           price: Number(item.price),
           quantity: item.quantity,
           imageUrl: item.product.images?.[0]?.url || "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=600&q=80",
-          sku: item.product.sku || "AJ-SKU",
+          sku: item.product.sku || "BBK-SKU",
           stock: item.product.stock || 50,
         });
         addedCount += item.quantity;
@@ -1125,7 +1125,7 @@ export default function AccountPage() {
                                 price: Number(prod.salePrice ?? prod.regularPrice),
                                 imageUrl: prod.images?.[0]?.url || "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=600&q=80",
                                 quantity: 1,
-                                sku: prod.sku || "AJ-SKU",
+                                sku: prod.sku || "BBK-SKU",
                                 stock: Number(prod.stock) || 50,
                               });
                               success(`Đã thêm "${prod.title}" vào giỏ hàng!`);
