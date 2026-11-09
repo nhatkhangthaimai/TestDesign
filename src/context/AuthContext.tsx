@@ -7,7 +7,7 @@ export interface User {
   email: string;
   name: string;
   phone?: string | null;
-  role: "ROLE_USER" | "ROLE_ADMIN";
+  role: "ROLE_USER" | "ROLE_ADMIN" | "USER" | "ADMIN" | string;
   avatar?: string | null;
   createdAt?: string | Date;
 }
@@ -15,7 +15,7 @@ export interface User {
 interface AuthContextType {
   user: User | null;
   loading: boolean;
-  login: (email: string, password: string) => Promise<{ success: boolean; error?: string }>;
+  login: (email: string, password: string) => Promise<{ success: boolean; error?: string; user?: User }>;
   register: (data: { name: string; email: string; password: string; phone?: string }) => Promise<{ success: boolean; error?: string }>;
   logout: () => Promise<void>;
   refreshUser: () => Promise<void>;
@@ -60,7 +60,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         return { success: false, error: data.error || "Đăng nhập thất bại" };
       }
       setUser(data.user);
-      return { success: true };
+      return { success: true, user: data.user };
     } catch {
       return { success: false, error: "Lỗi kết nối máy chủ" };
     }
@@ -88,13 +88,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     try {
       await fetch("/api/auth/logout", { method: "POST" });
       setUser(null);
-      window.location.href = "/";
+      window.location.href = "/login";
     } catch {
       setUser(null);
+      window.location.href = "/login";
     }
   };
 
-  const isAdmin = user?.role === "ROLE_ADMIN";
+  const isAdmin = user?.role === "ROLE_ADMIN" || user?.role === "ADMIN" || user?.role === "SUPER_ADMIN";
 
   return (
     <AuthContext.Provider

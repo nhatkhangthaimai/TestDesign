@@ -13,6 +13,7 @@ import {
   Package,
   Heart,
   ChevronDown,
+  Store,
 } from "lucide-react";
 import { useCart } from "@/context/CartContext";
 import { useAuth } from "@/context/AuthContext";
@@ -131,55 +132,79 @@ export default function Header() {
                     <div className="px-4 py-2 border-b border-[#f0f0f0]">
                       <p className="font-bold text-xs text-black">{user.name}</p>
                       <p className="text-[11px] text-[#595959] truncate">{user.email}</p>
-                      <span className="inline-block mt-1 text-[10px] bg-[#f0f0f0] px-2 py-0.5 rounded font-bold uppercase text-[#595959]">
-                        {user.role}
+                      <span
+                        className={`inline-block mt-1 text-[10px] px-2 py-0.5 rounded font-bold uppercase ${
+                          isAdmin
+                            ? "bg-[#fa9000]/15 text-[#fa9000]"
+                            : "bg-[#f0f0f0] text-[#595959]"
+                        }`}
+                      >
+                        {isAdmin ? "Quản Trị Viên (Admin)" : "Khách Hàng"}
                       </span>
                     </div>
 
-                    {isAdmin && (
-                      <Link
-                        href="/admin"
-                        onClick={() => setIsUserMenuOpen(false)}
-                        className="flex items-center gap-2.5 px-4 py-2 text-xs font-bold text-[#c31833] hover:bg-[#f0f0f0]"
-                      >
-                        <ShieldCheck className="w-4 h-4" />
-                        Trang Quản Trị Admin
-                      </Link>
+                    {isAdmin ? (
+                      <>
+                        <Link
+                          href="/admin"
+                          onClick={() => setIsUserMenuOpen(false)}
+                          className="flex items-center gap-2.5 px-4 py-2 text-xs font-bold text-[#c31833] hover:bg-[#fff5f5] transition-colors"
+                        >
+                          <ShieldCheck className="w-4 h-4 text-[#fa9000]" />
+                          Trang Quản Trị Admin
+                        </Link>
+                        <Link
+                          href="/"
+                          onClick={() => setIsUserMenuOpen(false)}
+                          className="flex items-center gap-2.5 px-4 py-2 text-xs text-black hover:bg-[#f0f0f0] transition-colors"
+                        >
+                          <Store className="w-4 h-4 text-[#595959]" />
+                          Xem Cửa Hàng
+                        </Link>
+                        <Link
+                          href="/account"
+                          onClick={() => setIsUserMenuOpen(false)}
+                          className="flex items-center gap-2.5 px-4 py-2 text-xs text-black hover:bg-[#f0f0f0] transition-colors"
+                        >
+                          <UserIcon className="w-4 h-4 text-[#595959]" />
+                          Cài Đặt Tài Khoản
+                        </Link>
+                      </>
+                    ) : (
+                      <>
+                        <Link
+                          href="/account"
+                          onClick={() => setIsUserMenuOpen(false)}
+                          className="flex items-center gap-2.5 px-4 py-2 text-xs text-black hover:bg-[#f0f0f0] transition-colors"
+                        >
+                          <UserIcon className="w-4 h-4 text-[#595959]" />
+                          Tài Khoản Của Tôi
+                        </Link>
+                        <Link
+                          href="/account/orders"
+                          onClick={() => setIsUserMenuOpen(false)}
+                          className="flex items-center gap-2.5 px-4 py-2 text-xs text-black hover:bg-[#f0f0f0] transition-colors"
+                        >
+                          <Package className="w-4 h-4 text-[#595959]" />
+                          Đơn Hàng Của Tôi
+                        </Link>
+                        <Link
+                          href="/account/wishlist"
+                          onClick={() => setIsUserMenuOpen(false)}
+                          className="flex items-center gap-2.5 px-4 py-2 text-xs text-black hover:bg-[#f0f0f0] transition-colors"
+                        >
+                          <Heart className="w-4 h-4 text-[#595959]" />
+                          Danh Sách Yêu Thích
+                        </Link>
+                      </>
                     )}
-
-                    <Link
-                      href="/account"
-                      onClick={() => setIsUserMenuOpen(false)}
-                      className="flex items-center gap-2.5 px-4 py-2 text-xs text-black hover:bg-[#f0f0f0]"
-                    >
-                      <UserIcon className="w-4 h-4 text-[#595959]" />
-                      Hồ Sơ Của Tôi
-                    </Link>
-
-                    <Link
-                      href="/account/orders"
-                      onClick={() => setIsUserMenuOpen(false)}
-                      className="flex items-center gap-2.5 px-4 py-2 text-xs text-black hover:bg-[#f0f0f0]"
-                    >
-                      <Package className="w-4 h-4 text-[#595959]" />
-                      Đơn Hàng Đã Mua
-                    </Link>
-
-                    <Link
-                      href="/account/wishlist"
-                      onClick={() => setIsUserMenuOpen(false)}
-                      className="flex items-center gap-2.5 px-4 py-2 text-xs text-black hover:bg-[#f0f0f0]"
-                    >
-                      <Heart className="w-4 h-4 text-[#595959]" />
-                      Danh Sách Yêu Thích
-                    </Link>
 
                     <button
                       onClick={() => {
                         setIsUserMenuOpen(false);
                         logout();
                       }}
-                      className="w-full flex items-center gap-2.5 px-4 py-2 text-xs text-[#c31833] hover:bg-[#f0f0f0] border-t border-[#f0f0f0]"
+                      className="w-full flex items-center gap-2.5 px-4 py-2 text-xs text-[#c31833] hover:bg-[#f0f0f0] border-t border-[#f0f0f0] transition-colors text-left"
                     >
                       <LogOut className="w-4 h-4" />
                       Đăng Xuất

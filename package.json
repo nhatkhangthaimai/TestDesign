@@ -13,7 +13,8 @@
     "inspect:tidb": "tsx scripts/inspect-tidb.ts",
     "seed:massive": "tsx scripts/data/seed-massive-catalog.ts",
     "seed:orders": "tsx scripts/data/seed-orders-customers.ts",
-    "seed:reviews": "tsx scripts/data/seed-product-reviews.ts"
+    "seed:reviews": "tsx scripts/data/seed-product-reviews.ts",
+    "test:rbac": "tsx scripts/test-rbac-suite.ts"
   },
   "prisma": {
     "seed": "tsx prisma/seed.ts"

@@ -36,13 +36,13 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
   useEffect(() => {
     if (!loading) {
-      if (!user || user.role !== "ROLE_ADMIN") {
+      if (!user || !isAdmin) {
         setAuthorized(false);
       } else {
         setAuthorized(true);
       }
     }
-  }, [user, loading]);
+  }, [user, loading, isAdmin]);
 
   if (loading || authorized === null) {
     return (
