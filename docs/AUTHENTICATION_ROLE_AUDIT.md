@@ -138,3 +138,4 @@ Hệ thống Authentication và RBAC mới đáp ứng 100% các tiêu chuẩn a
 2. **Admin** đăng nhập → tự động vào `/admin`.
 3. Không còn bất kỳ nút thử nghiệm nhanh hay tài khoản demo nào trên giao diện.
 4. Mọi route quản trị và API quản trị được bảo vệ nghiêm ngặt đa tầng (Edge Middleware + Server Layout + API Handlers).
+
