@@ -42,7 +42,7 @@ export default function RegisterPage() {
 
     if (res.success) {
       success("Đăng ký tài khoản thành công! Tặng bạn mã WELCOME10 giảm 10%.");
-      router.push("/account");
+      router.push("/");
     } else {
       error(res.error || "Đăng ký thất bại");
     }

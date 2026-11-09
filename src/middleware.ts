@@ -102,7 +102,7 @@ export async function middleware(req: NextRequest) {
       if (isAdmin) {
         return NextResponse.redirect(new URL("/admin", req.url));
       } else {
-        return NextResponse.redirect(new URL("/account", req.url));
+        return NextResponse.redirect(new URL("/", req.url));
       }
     }
   }

@@ -25,7 +25,7 @@ function LoginForm() {
       if (isAdmin) {
         router.replace("/admin");
       } else {
-        router.replace("/account");
+        router.replace("/");
       }
     }
   }, [user, loading, isAdmin, router]);
@@ -76,11 +76,11 @@ function LoginForm() {
             : "/admin";
         router.push(target);
       } else {
-        // Regular customer goes to /account or safe non-admin redirect
+        // Regular customer goes to homepage / (or safe non-admin redirect)
         const target =
           isSafeRedirect && !redirectParam.startsWith("/admin")
             ? redirectParam
-            : "/account";
+            : "/";
         router.push(target);
       }
     } else {

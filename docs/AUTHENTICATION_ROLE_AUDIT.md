@@ -13,7 +13,7 @@
 | **Giao diện đăng nhập** | Có thanh bấm nhanh 1-Click tài khoản mẫu: "Admin Cấp Cao" và "Khách Hàng" | **Đã loại bỏ 100% nút demo và thông tin tài khoản mẫu.** Giao diện chuẩn Enterprise sang trọng theo `design.md`. |
 | **Thông tin tài khoản** | Hardcode email/mật khẩu trong mã nguồn frontend (`admin@ecommerce.vn`, `khachhang@ecommerce.vn`) | **Không lưu trữ bất kỳ credential nào trong client code.** Toàn bộ thông tin đăng nhập do người dùng chủ động nhập. |
 | **Tính năng form** | Chỉ có 2 ô input đơn giản, không có ẩn/hiện mật khẩu | Bổ sung nút **Ẩn/Hiện mật khẩu** (Eye/EyeOff icon), checkbox **Ghi nhớ đăng nhập**, link **Quên mật khẩu**. |
-| **Điều hướng sau login** | Luôn chuyển hướng cứng về trang chủ (`router.push("/")`) | **Tự động phân quyền thông minh:**<br>• `ADMIN` → chuyển đến `/admin`<br>• `USER` → chuyển đến `/account` |
+| **Điều hướng sau login** | Luôn chuyển hướng cứng về trang chủ (`router.push("/")`) | **Tự động phân quyền thông minh:**<br>• `ADMIN` → chuyển đến `/admin`<br>• `USER` → chuyển đến trang chủ `/` (hoặc link an toàn trước đó) |
 | **Kiểm soát bảo vệ Route** | Chỉ dựa vào kiểm tra client-side trong `AdminLayout` | **Phòng thủ đa tầng (Defense-in-Depth):**<br>1. `src/middleware.ts` chặn ở tầng Edge/Server.<br>2. `AdminLayout` kiểm tra xác thực Client.<br>3. Từng API route `/api/admin/*` kiểm tra server-side. |
 | **Đăng ký thành viên** | Tạo tài khoản USER | **Bảo mật tuyệt đối:** Ép buộc `role: "ROLE_USER"`, ngăn chặn hoàn toàn việc client tự gửi `role: "ADMIN"`. |
 
@@ -41,14 +41,14 @@
    - Thêm Checkbox "Ghi nhớ đăng nhập trên thiết bị này".
    - Tự động nhận diện quyền tài khoản sau khi đăng nhập thành công:
      - Nếu quyền Admin (`ROLE_ADMIN`, `ADMIN`, `SUPER_ADMIN`): Điều hướng tức thì về `/admin`.
-     - Nếu quyền Khách hàng (`ROLE_USER`): Điều hướng về `/account`.
+     - Nếu quyền Khách hàng (`ROLE_USER`): Điều hướng thẳng về trang chủ `/`.
    - Chống tấn công Open Redirect (kiểm tra an toàn tham số `redirect`).
    - Bọc `Suspense` boundary chuẩn Next.js App Router.
 
 2. **[`src/app/register/page.tsx`](file:///d:/Test/src/app/register/page.tsx)**:
    - Xóa bỏ placeholder gợi ý admin (`admin@simpleshop.com`).
    - Thêm nút Ẩn/Hiện mật khẩu.
-   - Sau khi hoàn tất đăng ký tự động chuyển hướng khách hàng về `/account`.
+   - Sau khi hoàn tất đăng ký tự động chuyển hướng khách hàng về trang chủ `/`.
 
 3. **[`src/lib/auth.ts`](file:///d:/Test/src/lib/auth.ts)**:
    - Bổ sung hàm kiểm tra quyền chuẩn hóa `isAdminRole(role)`.

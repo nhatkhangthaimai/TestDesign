@@ -118,6 +118,7 @@ async function runTestSuite() {
     assert(!loginFileContent.includes("User@123456"), "Frontend Login: Không chứa mật khẩu hardcode User");
     assert(loginFileContent.includes("Ghi nhớ đăng nhập"), "Frontend Login: Có checkbox Ghi nhớ đăng nhập");
     assert(loginFileContent.includes("Eye") && loginFileContent.includes("EyeOff"), "Frontend Login: Có nút Hiện/Ẩn mật khẩu");
+    assert(loginFileContent.includes(': "/";'), "Frontend Login: Khách hàng (User) đăng nhập tự động chuyển về trang chủ /");
 
     // 10. Kiểm tra file middleware.ts
     const middlewareContent = fs.readFileSync(path.resolve(process.cwd(), "src/middleware.ts"), "utf-8");
