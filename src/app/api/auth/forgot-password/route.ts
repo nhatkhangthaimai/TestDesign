@@ -7,7 +7,7 @@ const forgotSchema = z.object({
   email: z.string().email("Địa chỉ email không hợp lệ"),
 });
 
-const JWT_SECRET = process.env.JWT_SECRET || "aj_ecommerce_production_secure_jwt_secret_2026_aws_cloud_xyz";
+const JWT_SECRET = process.env.JWT_SECRET || "aj_ecommerce_production_secure_jwt_secret_2026_xyz987";
 
 export async function POST(req: NextRequest) {
   try {
